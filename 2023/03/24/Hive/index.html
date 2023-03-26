@@ -4,8 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="My New Post, LCH">
-    <meta name="description" content="">
+    <meta name="keywords" content="LCH">
+    <meta name="description" content="1title: HQL学习
+
+
+
+Hive1 数据库DDL​	数据库操作一般是运维人员操作，数仓开发人员了解即可。
+1.1 查看数据库12345-- 查看数据库列表show databases;-- 使用like关键字模糊匹配，显示包含db">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +22,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>My New Post | LCH</title>
+    <title>LCH</title>
     <link rel="icon" type="image/png" href="/project/favicon.png">
     
 
@@ -332,12 +337,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/project/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/project/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">My New Post</h1>
+                    <h1 class="description center-align post-title"></h1>
                 </div>
             </div>
         </div>
@@ -373,7 +378,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-03-26
+                    2023-03-24
                 </div>
                 
 
@@ -394,7 +399,38 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title: HQL学习</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h1><h3 id="1-数据库DDL"><a href="#1-数据库DDL" class="headerlink" title="1 数据库DDL"></a>1 数据库DDL</h3><p>​	数据库操作一般是运维人员操作，数仓开发人员了解即可。</p>
+<h3 id="1-1-查看数据库"><a href="#1-1-查看数据库" class="headerlink" title="1.1 查看数据库"></a>1.1 查看数据库</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查看数据库列表</span></span><br><span class="line"><span class="keyword">show</span> databases;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 使用like关键字模糊匹配，显示包含db前缀的数据库名称</span></span><br><span class="line"><span class="keyword">show</span> databases <span class="keyword">like</span> <span class="string">&#x27;db_*&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-使用数据库"><a href="#1-2-使用数据库" class="headerlink" title="1.2 使用数据库"></a>1.2 使用数据库</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 切换到指定数据库</span></span><br><span class="line">use db_name;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-创建数据库"><a href="#1-3-创建数据库" class="headerlink" title="1.3 创建数据库"></a>1.3 创建数据库</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建数据库</span></span><br><span class="line"><span class="keyword">create</span> database db_name;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建数据库到指定路径</span></span><br><span class="line"><span class="keyword">create</span> database db_name location <span class="string">&#x27;path路径&#x27;</span>; #路径以HDFS的具体路径为主</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 给数据库添加描述信息</span></span><br><span class="line"><span class="keyword">create</span> database db_name comment <span class="string">&#x27;db_name描述信息&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-删除数据库"><a href="#1-4-删除数据库" class="headerlink" title="1.4 删除数据库"></a>1.4 删除数据库</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 删除数据库（此删除方式，需要将数据库中的表全部删除，才能删除数据库）</span></span><br><span class="line"><span class="keyword">drop</span> database db_name;</span><br><span class="line">或者</span><br><span class="line"><span class="keyword">drop</span> database if <span class="keyword">not</span> <span class="keyword">exists</span> db_name;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 强制删库（慎用，最好不用！！）</span></span><br><span class="line"><span class="keyword">drop</span> database db_name cascade;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-查看数据库的详细描述信息"><a href="#1-5-查看数据库的详细描述信息" class="headerlink" title="1.5 查看数据库的详细描述信息"></a>1.5 查看数据库的详细描述信息</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查看数据库描述</span></span><br><span class="line"><span class="keyword">desc</span> database db_name;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-6-数据库键值对信息"><a href="#1-6-数据库键值对信息" class="headerlink" title="1.6 数据库键值对信息"></a>1.6 数据库键值对信息</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建带键值对的数据库</span></span><br><span class="line"><span class="keyword">create</span> database db_name <span class="keyword">with</span> dbproperties (<span class="string">&#x27;own&#x27;</span> <span class="operator">=</span> <span class="string">&#x27;cc&#x27;</span>,<span class="string">&#x27;day&#x27;</span> <span class="operator">=</span> <span class="string">&#x27;20230324&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 查看数据库的键值对信息</span></span><br><span class="line"><span class="keyword">desc</span> database extended db_name;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改数据库的键值对信息</span></span><br><span class="line"><span class="keyword">alter</span> database db_name <span class="keyword">set</span> dbproperties (<span class="string">&#x27;k1&#x27;</span> <span class="operator">=</span> <span class="string">&#x27;v1&#x27;</span>,<span class="string">&#x27;k2&#x27;</span> <span class="operator">=</span> <span class="string">&#x27;v2&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-数据表DDL"><a href="#2-数据表DDL" class="headerlink" title="2 数据表DDL"></a>2 数据表DDL</h3><h3 id="2-1-普通建表"><a href="#2-1-普通建表" class="headerlink" title="2.1 普通建表"></a>2.1 普通建表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> test_1(id <span class="type">int</span> comment <span class="string">&#x27;id&#x27;</span>,name string comment <span class="string">&#x27;xxx&#x27;</span>)</span><br><span class="line">comment <span class="string">&#x27;student table 1&#x27;</span></span><br><span class="line"><span class="comment">-- 列表分隔格式(常见的三种形式)</span></span><br><span class="line"><span class="type">row</span> format delimited fields terminated <span class="keyword">by</span> <span class="string">&#x27;\t&#x27;</span>         <span class="comment">-- 列分隔符 </span></span><br><span class="line"><span class="type">row</span> format delimited collection items terminated <span class="keyword">by</span> <span class="string">&#x27;_&#x27;</span><span class="comment">-- STRUCT 和 ARRAY 的分隔符</span></span><br><span class="line"><span class="type">row</span> format delimited map keys terminated <span class="keyword">by</span> <span class="string">&#x27;:&#x27;</span>        <span class="comment">-- MAP中的key和value的分隔符</span></span><br><span class="line"><span class="type">row</span> format delimited lines terminated <span class="keyword">by</span> <span class="string">&#x27;\n&#x27;</span>          <span class="comment">-- 行分隔符</span></span><br><span class="line">tblproperties(<span class="string">&#x27;aaa&#x27;</span><span class="operator">=</span><span class="string">&#x27;bbb&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-根据查询结果建表"><a href="#2-2-根据查询结果建表" class="headerlink" title="2.2 根据查询结果建表"></a>2.2 根据查询结果建表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> xxx_table <span class="keyword">as</span></span><br><span class="line"><span class="keyword">select</span> name,</span><br><span class="line">	   id</span><br><span class="line"><span class="keyword">from</span> test_1;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-拷贝表结构"><a href="#2-3-拷贝表结构" class="headerlink" title="2.3 拷贝表结构"></a>2.3 拷贝表结构</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> xxx_table <span class="keyword">like</span> test_1;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-查询表列表"><a href="#2-4-查询表列表" class="headerlink" title="2.4 查询表列表"></a>2.4 查询表列表</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> tables;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-查询表结构"><a href="#2-5-查询表结构" class="headerlink" title="2.5 查询表结构"></a>2.5 查询表结构</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">desc</span> test_1;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-6-查询更详细的信息"><a href="#2-6-查询更详细的信息" class="headerlink" title="2.6 查询更详细的信息"></a>2.6 查询更详细的信息</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">desc</span> formatted test_1;</span><br></pre></td></tr></table></figure>
+
+
                 
             </div>
             <hr/>
@@ -420,7 +456,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://Jason-67.github.io/project/project/2023/03/26/My-New-Post/">https://Jason-67.github.io/project/project/2023/03/26/My-New-Post/</a>
+                    <a href="https://Jason-67.github.io/project/project/2023/03/24/Hive/">https://Jason-67.github.io/project/project/2023/03/24/Hive/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -500,7 +536,7 @@
         repo: '',
         owner: '',
         admin: null,
-        id: '2023-03-26T14-35-21',
+        id: '2023-03-24T14-49-34',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -528,10 +564,9 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <a href="/project/2023/03/26/My-New-Post/">
                     <div class="card-image">
@@ -549,9 +584,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-26
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-26
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -560,7 +595,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -571,13 +605,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/project/2023/03/24/Hive/">
+                <a href="/project/2023/03/11/hello-world/">
                     <div class="card-image">
                         
                         
-                        <img src="/project/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/project/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">Hello World</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -588,7 +622,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-11
                             </span>
                         <span class="publish-author">
                             
