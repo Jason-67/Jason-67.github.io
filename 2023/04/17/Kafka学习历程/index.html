@@ -5,7 +5,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Kafka学习历程, LCH">
-    <meta name="description" content="Kafka 学习历程">
+    <meta name="description" content="Kafka 学习历程第1章 Kafka概述1.1 定义
+企业使用Kafka，基本只是用于接收消息队列，基本不会使用Kafka进行流分析
+1.2 消息队列目前企业中比较常见的消息队列产品主要有Kafka、ActiveMQ、RabbitMQ、R">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -398,7 +400,1718 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Kafka-学习历程"><a href="#Kafka-学习历程" class="headerlink" title="Kafka 学习历程"></a>Kafka 学习历程</h1>
+                <h1 id="Kafka-学习历程"><a href="#Kafka-学习历程" class="headerlink" title="Kafka 学习历程"></a>Kafka 学习历程</h1><h1 id="第1章-Kafka概述"><a href="#第1章-Kafka概述" class="headerlink" title="第1章 Kafka概述"></a>第1章 Kafka概述</h1><h2 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h2><p><img src="https://raw.githubusercontent.com/Jason-67/Picture-Warehouse/master/clip_image002.gif" alt="img"></p>
+<p><strong>企业使用Kafka，基本只是用于接收消息队列，基本不会使用Kafka进行流分析</strong></p>
+<h2 id="1-2-消息队列"><a href="#1-2-消息队列" class="headerlink" title="1.2 消息队列"></a>1.2 消息队列</h2><p>目前企业中比较常见的消息队列产品主要有Kafka、ActiveMQ、RabbitMQ、RocketMQ等。</p>
+<p>在大数据场景主  要采用Kafka作为消息队列。在JavaEE开发中主要采用ActiveMQ、RabbitMQ、RocketMQ。</p>
+<h3 id="1-2-1-传统消息队列的应用场景"><a href="#1-2-1-传统消息队列的应用场景" class="headerlink" title="1.2.1 传统消息队列的应用场景"></a>1.2.1 传统消息队列的应用场景</h3><p>传统的消息队列的主要应用场景包括：<strong>缓存&#x2F;消峰</strong>、<strong>解耦</strong>和<strong>异步通信。</strong></p>
+<p><img src="https://raw.githubusercontent.com/Jason-67/Picture-Warehouse/master/clip_image004.gif" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/Jason-67/Picture-Warehouse/master/clip_image006.gif" alt="img"></p>
+<p><img src="https://raw.githubusercontent.com/Jason-67/Picture-Warehouse/master/clip_image008.gif" alt="img"></p>
+<h3 id="1-2-2-消息队列的两种模式"><a href="#1-2-2-消息队列的两种模式" class="headerlink" title="1.2.2 消息队列的两种模式"></a>1.2.2 消息队列的两种模式</h3><p><img src="/project/../post_picture/hive/clip_image010.gif" alt="img"></p>
+<h2 id="1-3-Kafka基础架构"><a href="#1-3-Kafka基础架构" class="headerlink" title="1.3 Kafka基础架构"></a>1.3 Kafka基础架构</h2><p><img src="/project/../post_picture/hive/clip_image012.gif" alt="img">    <strong>（1<strong><strong>）Producer</strong></strong>：</strong>消息生产者，就是向Kafka broker发消息的客户端。</p>
+<p><strong>（<strong><strong>2</strong></strong>）<strong><strong>Consumer</strong></strong>：</strong>消息消费者，向Kafka broker取消息的客户端。</p>
+<p><strong>（<strong><strong>3</strong></strong>）<strong><strong>Consumer Group</strong></strong>（<strong><strong>CG</strong></strong>）：</strong>消费者组，由多个consumer组成。<strong>消费者组内每个消费者负责消费不同分区的数据，一个分区只能由一个组内消费者消费；消费者组之间互不影响。</strong>所有的消费者都属于某个消费者组，即<strong>消费者组是逻辑上的一个订阅者</strong>。</p>
+<p><strong>（<strong><strong>4</strong></strong>）<strong><strong>Broker</strong></strong>：</strong>一台Kafka服务器就是一个broker。一个集群由多个broker组成。一个broker可以容纳多个topic。</p>
+<p><strong>（<strong><strong>5</strong></strong>）<strong><strong>Topic</strong></strong>：</strong>可以理解为一个队列，<strong>生产者和消费者面向的都是一个****topic</strong>。</p>
+<p><strong>（<strong><strong>6</strong></strong>）<strong><strong>Partition</strong></strong>：</strong>为了实现扩展性，一个非常大的topic可以分布到多个broker（即服务器）上，<strong>一个<strong><strong>topic</strong></strong>可以分为多个****partition</strong>，每个partition是一个有序的队列。</p>
+<p><strong>（7<strong><strong>）Replica</strong></strong>：</strong>副本。一个topic的每个分区都有若干个副本，一个<strong>Leader</strong>和若干个<strong>Follower</strong>。</p>
+<p><strong>（8<strong><strong>）Leader</strong></strong>：</strong>每个分区多个副本的“主”，生产者发送数据的对象，以及消费者消费数据的对象都是Leader。</p>
+<p><strong>（9<strong><strong>）Follower</strong></strong>：</strong>每个分区多个副本中的“从”，实时从Leader中同步数据，保持和Leader数据的同步。Leader发生故障时，某个Follower会成为新的Leader。</p>
+<h1 id="第2章-Kafka快速入门"><a href="#第2章-Kafka快速入门" class="headerlink" title="第2章 Kafka快速入门"></a>第2章 Kafka快速入门</h1><h2 id="2-1-安装部署"><a href="#2-1-安装部署" class="headerlink" title="2.1 安装部署"></a>2.1 安装部署</h2><h3 id="2-1-1-集群规划"><a href="#2-1-1-集群规划" class="headerlink" title="2.1.1 集群规划"></a>2.1.1 集群规划</h3><table>
+<thead>
+<tr>
+<th>hadoop102</th>
+<th>hadoop103</th>
+<th>hadoop104</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>zk</td>
+<td>zk</td>
+<td>zk</td>
+</tr>
+<tr>
+<td>kafka</td>
+<td>kafka</td>
+<td>kafka</td>
+</tr>
+</tbody></table>
+<h3 id="2-1-2-集群部署"><a href="#2-1-2-集群部署" class="headerlink" title="2.1.2 集群部署"></a>2.1.2 集群部署</h3><p><strong>0****）</strong>官方下载地址：<a target="_blank" rel="noopener" href="http://kafka.apache.org/downloads.html">http://kafka.apache.org/downloads.html</a></p>
+<p><strong>1****）</strong>解压安装包</p>
+<p>[atguigu@hadoop102 software]$ tar -zxvf kafka_2.12-3.0.0.tgz -C &#x2F;opt&#x2F;module&#x2F;</p>
+<p><strong>2****）</strong>修改解压后的文件名称</p>
+<p>[atguigu@hadoop102 module]$ mv kafka_2.12-3.0.0&#x2F; kafka</p>
+<p><strong>3****）</strong>进入到&#x2F;opt&#x2F;module&#x2F;kafka目录，修改配置文件</p>
+<p>[atguigu@hadoop102 kafka]$ cd config&#x2F;</p>
+<p>[atguigu@hadoop102 config]$ vim server.properties</p>
+<p>输入以下内容：</p>
+<p>#broker的全局唯一编号，不能重复，只能是数字。</p>
+<p>broker.id&#x3D;0</p>
+<p>#处理网络请求的线程数量</p>
+<p>num.network.threads&#x3D;3</p>
+<p>#用来处理磁盘IO的线程数量</p>
+<p>num.io.threads&#x3D;8</p>
+<p>#发送套接字的缓冲区大小</p>
+<p>socket.send.buffer.bytes&#x3D;102400</p>
+<p>#接收套接字的缓冲区大小</p>
+<p>socket.receive.buffer.bytes&#x3D;102400</p>
+<p>#请求套接字的缓冲区大小</p>
+<p>socket.request.max.bytes&#x3D;104857600</p>
+<p>#kafka运行日志(数据)存放的路径，路径不需要提前创建，kafka自动帮你创建，可以配置多个磁盘路径，路径与路径之间可以用”，”分隔</p>
+<p>log.dirs&#x3D;&#x2F;opt&#x2F;module&#x2F;kafka&#x2F;datas</p>
+<p>#topic在当前broker上的分区个数</p>
+<p>num.partitions&#x3D;1</p>
+<p>#用来恢复和清理data下数据的线程数量</p>
+<p>num.recovery.threads.per.data.dir&#x3D;1</p>
+<p># 每个topic创建时的副本数，默认时1个副本</p>
+<p>offsets.topic.replication.factor&#x3D;1</p>
+<p>#segment文件保留的最长时间，超时将被删除</p>
+<p>log.retention.hours&#x3D;168</p>
+<p>#每个segment文件的大小，默认最大1G</p>
+<p>log.segment.bytes&#x3D;1073741824</p>
+<p># 检查过期数据的时间，默认5分钟检查一次是否数据过期</p>
+<p>log.retention.check.interval.ms&#x3D;300000</p>
+<p>#配置连接Zookeeper集群地址（在zk根目录下创建&#x2F;kafka，方便管理）</p>
+<p>zookeeper.connect&#x3D;hadoop102:2181,hadoop103:2181,hadoop104:2181&#x2F;kafka</p>
+<p><strong>4****）</strong>分发安装包</p>
+<p>[atguigu@hadoop102 module]$ xsync kafka&#x2F;</p>
+<p><strong>5****）</strong>分别在hadoop103和hadoop104上修改配置文件&#x2F;opt&#x2F;module&#x2F;kafka&#x2F;config&#x2F;server.properties中的broker.id&#x3D;1、broker.id&#x3D;2</p>
+<p>​    注：broker.id不得重复，整个集群中唯一。</p>
+<p>[atguigu@hadoop103 module]$ vim kafka&#x2F;config&#x2F;server.properties</p>
+<p>修改:</p>
+<p># The id of the broker. This must be set to a unique integer for each broker.</p>
+<p>broker.id&#x3D;1</p>
+<p>[atguigu@hadoop104 module]$ vim kafka&#x2F;config&#x2F;server.properties</p>
+<p>修改:</p>
+<p># The id of the broker. This must be set to a unique integer for each broker.</p>
+<p>broker.id&#x3D;2</p>
+<p><strong>6****）</strong>配置环境变量</p>
+<p>​    （1）在&#x2F;etc&#x2F;profile.d&#x2F;my_env.sh文件中增加kafka环境变量配置</p>
+<p>[atguigu@hadoop102 module]$ sudo vim &#x2F;etc&#x2F;profile.d&#x2F;my_env.sh</p>
+<p>增加如下内容：</p>
+<p>#KAFKA_HOME</p>
+<p>export KAFKA_HOME&#x3D;&#x2F;opt&#x2F;module&#x2F;kafka</p>
+<p>export PATH&#x3D;$PATH:$KAFKA_HOME&#x2F;bin</p>
+<p>（2）刷新一下环境变量。</p>
+<p>[atguigu@hadoop102 module]$ source &#x2F;etc&#x2F;profile</p>
+<p>（3）分发环境变量文件到其他节点，并source。</p>
+<p>[atguigu@hadoop102 module]$ sudo &#x2F;home&#x2F;atguigu&#x2F;bin&#x2F;xsync &#x2F;etc&#x2F;profile.d&#x2F;my_env.sh</p>
+<p>[atguigu@hadoop103 module]$ source &#x2F;etc&#x2F;profile</p>
+<p>[atguigu@hadoop104 module]$ source &#x2F;etc&#x2F;profile</p>
+<p><strong>7****）</strong>启动集群</p>
+<p>​    （1）先启动Zookeeper集群，然后启动Kafka。</p>
+<p>[atguigu@hadoop102  kafka]$ zk.sh start </p>
+<p>（2）依次在hadoop102、hadoop103、hadoop104节点上启动Kafka。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-server-start.sh -daemon config&#x2F;server.properties</p>
+<p>[atguigu@hadoop103 kafka]$ bin&#x2F;kafka-server-start.sh -daemon config&#x2F;server.properties</p>
+<p>[atguigu@hadoop104 kafka]$ bin&#x2F;kafka-server-start.sh -daemon config&#x2F;server.properties</p>
+<p>注意：配置文件的路径要能够到server.properties。</p>
+<p><strong>8****）</strong>关闭集群</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-server-stop.sh </p>
+<p>[atguigu@hadoop103 kafka]$ bin&#x2F;kafka-server-stop.sh </p>
+<p>[atguigu@hadoop104 kafka]$ bin&#x2F;kafka-server-stop.sh </p>
+<h3 id="2-1-3-集群启停脚本"><a href="#2-1-3-集群启停脚本" class="headerlink" title="2.1.3 集群启停脚本"></a>2.1.3 集群启停脚本</h3><p>1）在&#x2F;home&#x2F;atguigu&#x2F;bin目录下创建文件kf.sh脚本文件</p>
+<p>[atguigu@hadoop102 bin]$ vim kf.sh</p>
+<p>脚本如下：</p>
+<p>#! &#x2F;bin&#x2F;bash</p>
+<p>case $1 in</p>
+<p>“start”){</p>
+<p>  for i in hadoop102 hadoop103 hadoop104</p>
+<p>  do</p>
+<p>​    echo “ ——–启动 $i Kafka——-“</p>
+<p>​    ssh $i “&#x2F;opt&#x2F;module&#x2F;kafka&#x2F;bin&#x2F;kafka-server-start.sh -daemon &#x2F;opt&#x2F;module&#x2F;kafka&#x2F;config&#x2F;server.properties”</p>
+<p>  done</p>
+<p>};;</p>
+<p>“stop”){</p>
+<p>  for i in hadoop102 hadoop103 hadoop104</p>
+<p>  do</p>
+<p>​    echo “ ——–停止 $i Kafka——-“</p>
+<p>​    ssh $i “&#x2F;opt&#x2F;module&#x2F;kafka&#x2F;bin&#x2F;kafka-server-stop.sh “</p>
+<p>  done</p>
+<p>};;</p>
+<p>esac</p>
+<p>2）添加执行权限</p>
+<p>[atguigu@hadoop102 bin]$ chmod +x kf.sh</p>
+<p>3）启动集群命令</p>
+<p>[atguigu@hadoop102 ~]$ kf.sh start</p>
+<p>4）停止集群命令</p>
+<p>[atguigu@hadoop102 ~]$ kf.sh stop</p>
+<p><strong>注意：</strong>停止Kafka集群时，一定要等Kafka所有节点进程全部停止后再停止Zookeeper集群。因为Zookeeper集群当中记录着Kafka集群相关信息，Zookeeper集群一旦先停止，Kafka集群就没有办法再获取停止进程的信息，只能手动杀死Kafka进程了。</p>
+<h2 id="2-2-Kafka命令行操作"><a href="#2-2-Kafka命令行操作" class="headerlink" title="2.2 Kafka命令行操作"></a>2.2 Kafka命令行操作</h2><p><img src="/project/../post_picture/hive/clip_image014.gif" alt="img"></p>
+<h3 id="2-2-1-主题命令行操作"><a href="#2-2-1-主题命令行操作" class="headerlink" title="2.2.1 主题命令行操作"></a>2.2.1 主题命令行操作</h3><p>1）查看操作主题命令参数</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>–bootstrap-server &lt;String: server  toconnect to&gt;</td>
+<td>连接的Kafka Broker主机名称和端口号。</td>
+</tr>
+<tr>
+<td>–topic &lt;String: topic&gt;</td>
+<td>操作的topic名称。</td>
+</tr>
+<tr>
+<td>–create</td>
+<td>创建主题。</td>
+</tr>
+<tr>
+<td>–delete</td>
+<td>删除主题。</td>
+</tr>
+<tr>
+<td>–alter</td>
+<td>修改主题。</td>
+</tr>
+<tr>
+<td>–list</td>
+<td>查看所有主题。</td>
+</tr>
+<tr>
+<td>–describe</td>
+<td>查看主题详细描述。</td>
+</tr>
+<tr>
+<td>–partitions &lt;Integer: # of  partitions&gt;</td>
+<td>设置分区数。</td>
+</tr>
+<tr>
+<td>–replication-factor&lt;Integer: replication factor&gt;</td>
+<td>设置分区副本。</td>
+</tr>
+<tr>
+<td>–config &lt;String: name&#x3D;value&gt;</td>
+<td>更新系统默认的配置。</td>
+</tr>
+</tbody></table>
+<p>2）查看当前服务器中的所有topic</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –list</p>
+<p>3）创建first topic</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –create –partitions 1 –replication-factor 3 –topic first</p>
+<p>选项说明：</p>
+<p>–topic 定义topic名</p>
+<p>–replication-factor 定义副本数</p>
+<p>–partitions 定义分区数</p>
+<p>4）查看first主题的详情</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –describe –topic first</p>
+<p>5）修改分区数（注意：分区数只能增加，不能减少）</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –alter –topic first –partitions 3</p>
+<p>6）再次查看first主题的详情</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –describe –topic first</p>
+<p>7）删除topic（学生自己演示）</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –delete –topic first</p>
+<h3 id="2-2-2-生产者命令行操作"><a href="#2-2-2-生产者命令行操作" class="headerlink" title="2.2.2 生产者命令行操作"></a>2.2.2 生产者命令行操作</h3><p>1）查看操作生产者命令参数</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-producer.sh</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>–bootstrap-server &lt;String: server  toconnect to&gt;</td>
+<td>连接的Kafka Broker主机名称和端口号。</td>
+</tr>
+<tr>
+<td>–topic &lt;String: topic&gt;</td>
+<td>操作的topic名称。</td>
+</tr>
+</tbody></table>
+<p>2）发送消息</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-producer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>&gt;hello world</p>
+<p>&gt;atguigu atguigu</p>
+<h3 id="2-2-3-消费者命令行操作"><a href="#2-2-3-消费者命令行操作" class="headerlink" title="2.2.3 消费者命令行操作"></a>2.2.3 消费者命令行操作</h3><p><strong>1****）查看操作消费者命令参数</strong></p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-consumer.sh</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>–bootstrap-server &lt;String: server  toconnect to&gt;</td>
+<td>连接的Kafka Broker主机名称和端口号。</td>
+</tr>
+<tr>
+<td>–topic &lt;String: topic&gt;</td>
+<td>操作的topic名称。</td>
+</tr>
+<tr>
+<td>–from-beginning</td>
+<td>从头开始消费。</td>
+</tr>
+<tr>
+<td>–group &lt;String: consumer group id&gt;</td>
+<td>指定消费者组名称。</td>
+</tr>
+</tbody></table>
+<p><strong>2****）消费消息</strong></p>
+<p>（1）消费first主题中的数据。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>（2）把主题中所有的数据都读取出来（包括历史数据）。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –from-beginning –topic first</p>
+<h1 id="第3章-Kafka生产者"><a href="#第3章-Kafka生产者" class="headerlink" title="第3章 Kafka生产者"></a>第3章 Kafka生产者</h1><h2 id="3-1-生产者消息发送流程"><a href="#3-1-生产者消息发送流程" class="headerlink" title="3.1 生产者消息发送流程"></a>3.1 生产者消息发送流程</h2><h3 id="3-1-1-发送原理"><a href="#3-1-1-发送原理" class="headerlink" title="3.1.1 发送原理"></a>3.1.1 发送原理</h3><p>在消息发送的过程中，涉及到了<strong>两个线程——<strong><strong>main</strong></strong>线程和Sender****线程</strong>。在main线程中创建了<strong>一个双端队列****RecordAccumulator</strong>。main线程将消息发送给RecordAccumulator，Sender线程不断从RecordAccumulator中拉取消息发送到Kafka Broker。</p>
+<p><img src="/project/../post_picture/hive/clip_image016.gif" alt="img"></p>
+<h3 id="3-1-2-生产者重要参数列表"><a href="#3-1-2-生产者重要参数列表" class="headerlink" title="3.1.2 生产者重要参数列表"></a>3.1.2 生产者重要参数列表</h3><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>bootstrap.servers</td>
+<td>生产者连接集群所需的broker地址清单。例如hadoop102:9092,hadoop103:9092,hadoop104:9092，可以设置1个或者多个，中间用逗号隔开。注意这里并非需要所有的broker地址，因为生产者从给定的broker里查找到其他broker信息。</td>
+</tr>
+<tr>
+<td>key.serializer和value.serializer</td>
+<td>指定发送消息的key和value的序列化类型。一定要写全类名。</td>
+</tr>
+<tr>
+<td>buffer.memory</td>
+<td>RecordAccumulator缓冲区总大小，默认32m。</td>
+</tr>
+<tr>
+<td>batch.size</td>
+<td>缓冲区一批数据最大值，默认16k。适当增加该值，可以提高吞吐量，但是如果该值设置太大，会导致数据传输延迟增加。</td>
+</tr>
+<tr>
+<td>linger.ms</td>
+<td>如果数据迟迟未达到batch.size，sender等待linger.time之后就会发送数据。单位ms，默认值是0ms，表示没有延迟。生产环境建议该值大小为5-100ms之间。</td>
+</tr>
+<tr>
+<td>acks</td>
+<td>0：生产者发送过来的数据，不需要等数据落盘应答。  1：生产者发送过来的数据，Leader收到数据后应答。  -1（all）：生产者发送过来的数据，Leader+和isr队列里面的所有节点收齐数据后应答。默认值是-1，-1和all是等价的。</td>
+</tr>
+<tr>
+<td>max.in.flight.requests.per.connection</td>
+<td>允许最多没有返回ack的次数，默认为5，开启幂等性要保证该值是 1-5的数字。</td>
+</tr>
+<tr>
+<td>retries</td>
+<td>当消息发送出现错误的时候，系统会重发消息。retries表示重试次数。默认是int最大值，2147483647。  如果设置了重试，还想保证消息的有序性，需要设置  MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION&#x3D;1否则在重试此失败消息的时候，其他的消息可能发送成功了。</td>
+</tr>
+<tr>
+<td>retry.backoff.ms</td>
+<td>两次重试之间的时间间隔，默认是100ms。</td>
+</tr>
+<tr>
+<td>enable.idempotence</td>
+<td>是否开启幂等性，默认true，开启幂等性。</td>
+</tr>
+<tr>
+<td>compression.type</td>
+<td>生产者发送的所有数据的压缩方式。默认是none，也就是不压缩。   支持压缩类型：none、gzip、snappy、lz4和zstd。</td>
+</tr>
+</tbody></table>
+<h2 id="3-2-异步发送API"><a href="#3-2-异步发送API" class="headerlink" title="3.2 异步发送API"></a>3.2 异步发送API</h2><h3 id="3-2-1-普通异步发送"><a href="#3-2-1-普通异步发送" class="headerlink" title="3.2.1 普通异步发送"></a>3.2.1 普通异步发送</h3><p>1）需求：创建Kafka生产者，采用异步的方式发送到Kafka Broker</p>
+<p><img src="/project/../post_picture/hive/clip_image018.gif" alt="img"></p>
+<p>2）代码编写</p>
+<p>（1）创建工程kafka</p>
+<p>（2）导入依赖</p>
+<dependencies>
+
+   <dependency>
+
+<p>​     <groupId>org.apache.kafka</groupId></p>
+<p>​     <artifactId>kafka-clients</artifactId></p>
+<p>​     <version>3.0.0</version></p>
+   </dependency>
+
+</dependencies>
+
+<p>（3）创建包名：com.atguigu.kafka.producer</p>
+<p>（4）编写不带回调函数的API代码</p>
+<p>package com.atguigu.kafka.producer;</p>
+<p>import org.apache.kafka.clients.producer.KafkaProducer;</p>
+<p>import org.apache.kafka.clients.producer.ProducerRecord;</p>
+<p>import java.util.Properties;</p>
+<p>public class CustomProducer {</p>
+<p>  public static void main(String[] args) throws InterruptedException {</p>
+<p>​    &#x2F;&#x2F; 1. 创建kafka生产者的配置对象</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    &#x2F;&#x2F; 2. 给kafka配置对象添加配置信息：bootstrap.servers</p>
+<p>​    properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, “hadoop102:9092”);</p>
+<p>​    </p>
+<p>​    &#x2F;&#x2F; key,value序列化（必须）：key.serializer，value.serializer</p>
+<p>​    properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, “org.apache.kafka.common.serialization.StringSerializer”);</p>
+<p>​    properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, “org.apache.kafka.common.serialization.StringSerializer”);</p>
+<p>​    &#x2F;&#x2F; 3. 创建kafka生产者对象</p>
+<p>​    KafkaProducer&lt;String, String&gt; kafkaProducer &#x3D; new KafkaProducer&lt;String, String&gt;(properties);</p>
+<p>​    &#x2F;&#x2F; 4. 调用send方法,发送消息</p>
+<p>​    for (int i &#x3D; 0; i &lt; 5; i++) {</p>
+<p>​      kafkaProducer.send(new ProducerRecord&lt;&gt;(“first”,”atguigu “ + i));</p>
+<p>​    }</p>
+<p>​    &#x2F;&#x2F; 5. 关闭资源</p>
+<p>​    kafkaProducer.close();</p>
+<p>  }</p>
+<p>} </p>
+<p>测试：</p>
+<p>①在hadoop102上开启Kafka消费者。</p>
+<p>[atguigu@hadoop103 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>②在IDEA中执行代码，观察hadoop102控制台中是否接收到消息。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>atguigu 0</p>
+<p>atguigu 1</p>
+<p>atguigu 2</p>
+<p>atguigu 3</p>
+<p>atguigu 4</p>
+<h3 id="3-2-2-带回调函数的异步发送"><a href="#3-2-2-带回调函数的异步发送" class="headerlink" title="3.2.2 带回调函数的异步发送"></a>3.2.2 带回调函数的异步发送</h3><p>回调函数会在producer收到ack时调用，为异步调用，该方法有两个参数，分别是元数据信息（RecordMetadata）和异常信息（Exception），如果Exception为null，说明消息发送成功，如果Exception不为null，说明消息发送失败。</p>
+<p><img src="/project/../post_picture/hive/clip_image020.gif" alt="img"></p>
+<p>注意：消息发送失败会自动重试，不需要我们在回调函数中手动重试。</p>
+<p>package com.atguigu.kafka.producer;</p>
+<p>import org.apache.kafka.clients.producer.*;</p>
+<p>import java.util.Properties;</p>
+<p>public class CustomProducerCallback {</p>
+<p>  public static void main(String[] args) throws InterruptedException {</p>
+<p>​    &#x2F;&#x2F; 1. 创建kafka生产者的配置对象</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    &#x2F;&#x2F; 2. 给kafka配置对象添加配置信息</p>
+<p>​    properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, “hadoop102:9092”);</p>
+<p>​    &#x2F;&#x2F; key,value序列化（必须）：key.serializer，value.serializer</p>
+<p>​    properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</p>
+<p>​    properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</p>
+<p>​    &#x2F;&#x2F; 3. 创建kafka生产者对象</p>
+<p>​    KafkaProducer&lt;String, String&gt; kafkaProducer &#x3D; new KafkaProducer&lt;String, String&gt;(properties);</p>
+<p>​    &#x2F;&#x2F; 4. 调用send方法,发送消息</p>
+<p>​    for (int i &#x3D; 0; i &lt; 5; i++) {</p>
+<p>​      &#x2F;&#x2F; 添加回调</p>
+<p>​      kafkaProducer.send(new ProducerRecord&lt;&gt;(“first”, “atguigu “ + i), new Callback() {</p>
+<p>​        &#x2F;&#x2F; 该方法在Producer收到ack时调用，为异步调用</p>
+<p>​        @Override</p>
+<p>​        public void onCompletion(RecordMetadata metadata, Exception exception) {</p>
+<p>​          if (exception &#x3D;&#x3D; null) {</p>
+<p>​            &#x2F;&#x2F; 没有异常,输出信息到控制台</p>
+<p>​            System.out.println(“主题：” + metadata.topic() + “-&gt;” + “分区：” + metadata.partition());</p>
+<p>​          } else {</p>
+<p>​            &#x2F;&#x2F; 出现异常打印</p>
+<p>​            exception.printStackTrace();</p>
+<p>​          }</p>
+<p>​        }</p>
+<p>​      });</p>
+<p>​      &#x2F;&#x2F; 延迟一会会看到数据发往不同分区</p>
+<p>​      Thread.sleep(2);</p>
+<p>​    }</p>
+<p>​    &#x2F;&#x2F; 5. 关闭资源</p>
+<p>​    kafkaProducer.close();</p>
+<p>  }</p>
+<p>}</p>
+<p>测试：</p>
+<p>①在hadoop102上开启Kafka消费者。</p>
+<p>[atguigu@hadoop103 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>②在IDEA中执行代码，观察hadoop102控制台中是否接收到消息。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>atguigu 0</p>
+<p>atguigu 1</p>
+<p>atguigu 2</p>
+<p>atguigu 3</p>
+<p>atguigu 4</p>
+<p>③在IDEA控制台观察回调信息。</p>
+<p>主题：first-&gt;分区：0</p>
+<p>主题：first-&gt;分区：0</p>
+<p>主题：first-&gt;分区：1</p>
+<p>主题：first-&gt;分区：1</p>
+<p>主题：first-&gt;分区：1</p>
+<h2 id="3-3-同步发送API"><a href="#3-3-同步发送API" class="headerlink" title="3.3 同步发送API"></a>3.3 同步发送API</h2><p><img src="/project/../post_picture/hive/clip_image022.gif" alt="img"></p>
+<p>只需在异步发送的基础上，再调用一下get()方法即可。</p>
+<p>package com.atguigu.kafka.producer;</p>
+<p>import org.apache.kafka.clients.producer.KafkaProducer;</p>
+<p>import org.apache.kafka.clients.producer.ProducerConfig;</p>
+<p>import org.apache.kafka.clients.producer.ProducerRecord;</p>
+<p>import java.util.Properties;</p>
+<p>import java.util.concurrent.ExecutionException;</p>
+<p>public class CustomProducerSync {</p>
+<p>  public static void main(String[] args) throws InterruptedException, ExecutionException {</p>
+<p>​    &#x2F;&#x2F; 1. 创建kafka生产者的配置对象</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    &#x2F;&#x2F; 2. 给kafka配置对象添加配置信息</p>
+<p>  properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,”hadoop102:9092”);</p>
+<p>​    &#x2F;&#x2F; key,value序列化（必须）：key.serializer，value.serializer</p>
+<p>​    properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</p>
+<p>​    properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</p>
+<p>​    &#x2F;&#x2F; 3. 创建kafka生产者对象</p>
+<p>​    KafkaProducer&lt;String, String&gt; kafkaProducer &#x3D; new KafkaProducer&lt;String, String&gt;(properties);</p>
+<p>​    &#x2F;&#x2F; 4. 调用send方法,发送消息</p>
+<p>​    for (int i &#x3D; 0; i &lt; 10; i++) {</p>
+<p>​      &#x2F;&#x2F; 异步发送 默认</p>
+<p>&#x2F;&#x2F;      kafkaProducer.send(new ProducerRecord&lt;&gt;(“first”,”kafka” + i));</p>
+<p>​      &#x2F;&#x2F; 同步发送</p>
+<p>​      kafkaProducer.send(new ProducerRecord&lt;&gt;(“first”,”kafka” + i)).get();</p>
+<p>​    }</p>
+<p>​    &#x2F;&#x2F; 5. 关闭资源</p>
+<p>​    kafkaProducer.close();</p>
+<p>  }</p>
+<p>}</p>
+<p>测试：</p>
+<p>①在hadoop102上开启Kafka消费者。</p>
+<p>[atguigu@hadoop103 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>②在IDEA中执行代码，观察hadoop102控制台中是否接收到消息。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>atguigu 0</p>
+<p>atguigu 1</p>
+<p>atguigu 2</p>
+<p>atguigu 3</p>
+<p>atguigu 4</p>
+<h2 id="3-4-生产者分区"><a href="#3-4-生产者分区" class="headerlink" title="3.4 生产者分区"></a>3.4 生产者分区</h2><h3 id="3-4-1-分区好处"><a href="#3-4-1-分区好处" class="headerlink" title="3.4.1 分区好处"></a>3.4.1 分区好处</h3><p><img src="/project/../post_picture/hive/clip_image024.gif" alt="img"></p>
+<h3 id="3-4-2-生产者发送消息的分区策略"><a href="#3-4-2-生产者发送消息的分区策略" class="headerlink" title="3.4.2 生产者发送消息的分区策略"></a>3.4.2 生产者发送消息的分区策略</h3><p><strong>1****）默认的分区器 DefaultPartitioner</strong></p>
+<p>​    在IDEA中ctrl + n，全局查找DefaultPartitioner。</p>
+<p>&#x2F;**</p>
+<p> * The default partitioning strategy:</p>
+<p> * <ul></p>
+<p> * <li>If a partition is specified in the record, use it</p>
+<p> * <li>If no partition is specified but a key is present choose a partition based on a hash of the key</p>
+<p> * <li>If no partition or key is present choose the sticky partition that changes when the batch is full.</p>
+<p> * </p>
+<p> * See KIP-480 for details about sticky partitioning.</p>
+<p> *&#x2F;</p>
+<p>public class DefaultPartitioner implements Partitioner {</p>
+<p>  … …</p>
+<p>}</p>
+<p><img src="/project/../post_picture/hive/clip_image026.gif" alt="img"></p>
+<p><strong>2****）案例一</strong></p>
+<p>将数据发往指定partition的情况下，例如，将所有数据发往分区1中。</p>
+<p>package com.atguigu.kafka.producer;</p>
+<p>import org.apache.kafka.clients.producer.*;</p>
+<p>import java.util.Properties;</p>
+<p>public class CustomProducerCallbackPartitions {</p>
+<p>  public static void main(String[] args) {</p>
+<p>​    &#x2F;&#x2F; 1. 创建kafka生产者的配置对象</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    &#x2F;&#x2F; 2. 给kafka配置对象添加配置信息</p>
+<p>   properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,”hadoop102:9092”);</p>
+<p>​    &#x2F;&#x2F; key,value序列化（必须）：key.serializer，value.serializer</p>
+<p>​    properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</p>
+<p>​    properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</p>
+<p>​    KafkaProducer&lt;String, String&gt; kafkaProducer &#x3D; new KafkaProducer&lt;&gt;(properties);</p>
+<p>​    for (int i &#x3D; 0; i &lt; 5; i++) {</p>
+<p>​      &#x2F;&#x2F; 指定数据发送到1号分区，key为空（IDEA中ctrl + p查看参数）</p>
+<p>​      kafkaProducer.send(new ProducerRecord&lt;&gt;(“first”, 1,””,”atguigu “ + i), new Callback() {</p>
+<p>​        @Override</p>
+<p>​        public void onCompletion(RecordMetadata metadata, Exception e) {</p>
+<p>​          if (e &#x3D;&#x3D; null){</p>
+<p>​            System.out.println(“主题：” + metadata.topic() + “-&gt;” + “分区：” + metadata.partition()</p>
+<p>​            );</p>
+<p>​          }else {</p>
+<p>​            e.printStackTrace();</p>
+<p>​          }</p>
+<p>​        }</p>
+<p>​      });</p>
+<p>​    }</p>
+<p>​    kafkaProducer.close();</p>
+<p>  }</p>
+<p>}</p>
+<p>测试：</p>
+<p>①在hadoop102上开启Kafka消费者。</p>
+<p>[atguigu@hadoop103 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>②在IDEA中执行代码，观察hadoop102控制台中是否接收到消息。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>atguigu 0</p>
+<p>atguigu 1</p>
+<p>atguigu 2</p>
+<p>atguigu 3</p>
+<p>atguigu 4</p>
+<p>③在IDEA控制台观察回调信息。</p>
+<p>主题：first-&gt;分区：1</p>
+<p>主题：first-&gt;分区：1</p>
+<p>主题：first-&gt;分区：1</p>
+<p>主题：first-&gt;分区：1</p>
+<p>主题：first-&gt;分区：1</p>
+<p><strong>3****）案例二</strong></p>
+<p>没有指明partition值但有key的情况下，将key的hash值与topic的partition数进行取余得到partition值。</p>
+<p>package com.atguigu.kafka.producer;</p>
+<p>import org.apache.kafka.clients.producer.*;</p>
+<p>import java.util.Properties;</p>
+<p>public class CustomProducerCallback {</p>
+<p>  public static void main(String[] args) {</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,”hadoop102:9092”);</p>
+<p>​    properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</p>
+<p>​    properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</p>
+<p>​    KafkaProducer&lt;String, String&gt; kafkaProducer &#x3D; new KafkaProducer&lt;&gt;(properties);</p>
+<p>​    for (int i &#x3D; 0; i &lt; 5; i++) {</p>
+<p>​      &#x2F;&#x2F; 依次指定key值为a,b,f ，数据key的hash值与3个分区求余，分别发往1、2、0</p>
+<p>​      kafkaProducer.send(new ProducerRecord&lt;&gt;(“first”, “a”,”atguigu “ + i), new Callback() {</p>
+<p>​        @Override</p>
+<p>​        public void onCompletion(RecordMetadata metadata, Exception e) {</p>
+<p>​          if (e &#x3D;&#x3D; null){</p>
+<p>​            System.out.println(“主题：” + metadata.topic() + “-&gt;” + “分区：” + metadata.partition()</p>
+<p>​            );</p>
+<p>​          }else {</p>
+<p>​            e.printStackTrace();</p>
+<p>​          }</p>
+<p>​        }</p>
+<p>​      });</p>
+<p>​    }</p>
+<p>​    kafkaProducer.close();</p>
+<p>  }</p>
+<p>}</p>
+<p>测试：</p>
+<p>①key&#x3D;”a”时，在控制台查看结果。</p>
+<p>主题：first-&gt;分区：1</p>
+<p>主题：first-&gt;分区：1</p>
+<p>主题：first-&gt;分区：1</p>
+<p>主题：first-&gt;分区：1</p>
+<p>主题：first-&gt;分区：1</p>
+<p>②key&#x3D;”b”时，在控制台查看结果。</p>
+<p>主题：first-&gt;分区：2</p>
+<p>主题：first-&gt;分区：2</p>
+<p>主题：first-&gt;分区：2</p>
+<p>主题：first-&gt;分区：2</p>
+<p>主题：first-&gt;分区：2</p>
+<p>③key&#x3D;”f”时，在控制台查看结果。</p>
+<p>主题：first-&gt;分区：0</p>
+<p>主题：first-&gt;分区：0</p>
+<p>主题：first-&gt;分区：0</p>
+<p>主题：first-&gt;分区：0</p>
+<p>主题：first-&gt;分区：0</p>
+<h3 id="3-4-3-自定义分区器"><a href="#3-4-3-自定义分区器" class="headerlink" title="3.4.3 自定义分区器"></a>3.4.3 自定义分区器</h3><p>​    如果研发人员可以根据企业需求，自己重新实现分区器。</p>
+<p><strong>1****）需求</strong></p>
+<p>例如我们实现一个分区器实现，发送过来的数据中如果包含atguigu，就发往0号分区，不包含atguigu，就发往1号分区。</p>
+<p><strong>2****）实现步骤</strong></p>
+<p>​    （1）定义类实现Partitioner接口。</p>
+<p>​    （2）重写partition()方法。</p>
+<p>package com.atguigu.kafka.producer;</p>
+<p>import org.apache.kafka.clients.producer.Partitioner;</p>
+<p>import org.apache.kafka.common.Cluster;</p>
+<p>import java.util.Map;</p>
+<p>&#x2F;**</p>
+<p> * 1. 实现接口Partitioner</p>
+<p> * 2. 实现3个方法:partition,close,configure</p>
+<p> * 3. 编写partition方法,返回分区号</p>
+<p> *&#x2F;</p>
+<p>public class MyPartitioner implements Partitioner {</p>
+<p>  &#x2F;**</p>
+<p>   * 返回信息对应的分区</p>
+<p>   * @param topic     主题</p>
+<p>   * @param key      消息的key</p>
+<p>   * @param keyBytes   消息的key序列化后的字节数组</p>
+<p>   * @param value     消息的value</p>
+<p>   * @param valueBytes  消息的value序列化后的字节数组</p>
+<p>   * @param cluster    集群元数据可以查看分区信息</p>
+<p>   * @return</p>
+<p>   *&#x2F;</p>
+<p>  @Override</p>
+<p>  public int partition(String topic, Object key, byte[] keyBytes, Object value, byte[] valueBytes, Cluster cluster) {</p>
+<p>​    &#x2F;&#x2F; 获取消息</p>
+<p>​    String msgValue &#x3D; value.toString();</p>
+<p>​    &#x2F;&#x2F; 创建partition</p>
+<p>​    int partition;</p>
+<p>​    &#x2F;&#x2F; 判断消息是否包含atguigu</p>
+<p>​    if (msgValue.contains(“atguigu”)){</p>
+<p>​      partition &#x3D; 0;</p>
+<p>​    }else {</p>
+<p>​      partition &#x3D; 1;</p>
+<p>​    }</p>
+<p>​    &#x2F;&#x2F; 返回分区号</p>
+<p>​    return partition;</p>
+<p>  }</p>
+<p>  &#x2F;&#x2F; 关闭资源</p>
+<p>  @Override</p>
+<p>  public void close() {</p>
+<p>  }</p>
+<p>  &#x2F;&#x2F; 配置方法</p>
+<p>  @Override</p>
+<p>  public void configure(Map&lt;String, ?&gt; configs) {</p>
+<p>  }</p>
+<p>}</p>
+<p>（3）使用分区器的方法，在生产者的配置中添加分区器参数。</p>
+<p>package com.atguigu.kafka.producer;</p>
+<p>import org.apache.kafka.clients.producer.*;</p>
+<p>import java.util.Properties;</p>
+<p>public class CustomProducerCallbackPartitions {</p>
+<p>  public static void main(String[] args) throws InterruptedException {</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,”hadoop102:9092”);</p>
+<p>​    properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</p>
+<p>​    properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</p>
+<p>​    &#x2F;&#x2F; 添加自定义分区器</p>
+<p>properties.put(ProducerConfig.PARTITIONER_CLASS_CONFIG,”com.atguigu.kafka.producer.MyPartitioner”);</p>
+<p>​    KafkaProducer&lt;String, String&gt; kafkaProducer &#x3D; new KafkaProducer&lt;&gt;(properties);</p>
+<p>​    for (int i &#x3D; 0; i &lt; 5; i++) {</p>
+<p>​      </p>
+<p>​      kafkaProducer.send(new ProducerRecord&lt;&gt;(“first”, “atguigu “ + i), new Callback() {</p>
+<p>​        @Override</p>
+<p>​        public void onCompletion(RecordMetadata metadata, Exception e) {</p>
+<p>​          if (e &#x3D;&#x3D; null){</p>
+<p>​            System.out.println(“主题：” + metadata.topic() + “-&gt;” + “分区：” + metadata.partition()</p>
+<p>​            );</p>
+<p>​          }else {</p>
+<p>​            e.printStackTrace();</p>
+<p>​          }</p>
+<p>​        }</p>
+<p>​      });</p>
+<p>​    }</p>
+<p>​    kafkaProducer.close();</p>
+<p>  }</p>
+<p>}</p>
+<p>（4）测试</p>
+<p>①在hadoop102上开启Kafka消费者。</p>
+<p>[atguigu@hadoop103 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>②在IDEA控制台观察回调信息。</p>
+<p>主题：first-&gt;分区：0</p>
+<p>主题：first-&gt;分区：0</p>
+<p>主题：first-&gt;分区：0</p>
+<p>主题：first-&gt;分区：0</p>
+<p>主题：first-&gt;分区：0</p>
+<h2 id="3-5-生产经验——生产者如何提高吞吐量"><a href="#3-5-生产经验——生产者如何提高吞吐量" class="headerlink" title="3.5 生产经验——生产者如何提高吞吐量"></a>3.5 生产经验——生产者如何提高吞吐量</h2><p><img src="/project/../post_picture/hive/clip_image028.gif" alt="img"></p>
+<p>package com.atguigu.kafka.producer;</p>
+<p>import org.apache.kafka.clients.producer.KafkaProducer;</p>
+<p>import org.apache.kafka.clients.producer.ProducerRecord;</p>
+<p>import java.util.Properties;</p>
+<p>public class CustomProducerParameters {</p>
+<p>  public static void main(String[] args) throws InterruptedException {</p>
+<p>​    &#x2F;&#x2F; 1. 创建kafka生产者的配置对象</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    &#x2F;&#x2F; 2. 给kafka配置对象添加配置信息：bootstrap.servers</p>
+<p>​    properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, “hadoop102:9092”);</p>
+<p>​    </p>
+<p>​    &#x2F;&#x2F; key,value序列化（必须）：key.serializer，value.serializer</p>
+<p>​    properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, “org.apache.kafka.common.serialization.StringSerializer”);</p>
+<p>​    properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, “org.apache.kafka.common.serialization.StringSerializer”);</p>
+<p>​    &#x2F;&#x2F; batch.size：批次大小，默认16K</p>
+<p>​    properties.put(ProducerConfig.BATCH_SIZE_CONFIG, 16384);</p>
+<p>​    &#x2F;&#x2F; linger.ms：等待时间，默认0</p>
+<p>​    properties.put(ProducerConfig.LINGER_MS_CONFIG, 1);</p>
+<p>​     &#x2F;&#x2F; RecordAccumulator：缓冲区大小，默认32M：buffer.memory</p>
+<p>​    properties.put(ProducerConfig.BUFFER_MEMORY_CONFIG, 33554432);</p>
+<p>​    &#x2F;&#x2F; compression.type：压缩，默认none，可配置值gzip、snappy、lz4和zstd</p>
+<p>properties.put(ProducerConfig.COMPRESSION_TYPE_CONFIG,”snappy”);</p>
+<p>​    &#x2F;&#x2F; 3. 创建kafka生产者对象</p>
+<p>​    KafkaProducer&lt;String, String&gt; kafkaProducer &#x3D; new KafkaProducer&lt;String, String&gt;(properties);</p>
+<p>​    &#x2F;&#x2F; 4. 调用send方法,发送消息</p>
+<p>​    for (int i &#x3D; 0; i &lt; 5; i++) {</p>
+<p>​      kafkaProducer.send(new ProducerRecord&lt;&gt;(“first”,”atguigu “ + i));</p>
+<p>​    }</p>
+<p>​    &#x2F;&#x2F; 5. 关闭资源</p>
+<p>​    kafkaProducer.close();</p>
+<p>  }</p>
+<p>} </p>
+<p>测试：</p>
+<p>①在hadoop102上开启Kafka消费者。</p>
+<p>[atguigu@hadoop103 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>②在IDEA中执行代码，观察hadoop102控制台中是否接收到消息。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>atguigu 0</p>
+<p>atguigu 1</p>
+<p>atguigu 2</p>
+<p>atguigu 3</p>
+<p>atguigu 4</p>
+<h2 id="3-6-生产经验——数据可靠性"><a href="#3-6-生产经验——数据可靠性" class="headerlink" title="3.6 生产经验——数据可靠性"></a>3.6 生产经验——数据可靠性</h2><p>0）回顾发送流程</p>
+<p><img src="/project/../post_picture/hive/clip_image030.gif" alt="img"></p>
+<p>1）ack应答原理</p>
+<p><img src="/project/../post_picture/hive/clip_image032.gif" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image034.gif" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image036.gif" alt="img"></p>
+<p>2）代码配置</p>
+<p>package com.atguigu.kafka.producer;</p>
+<p>import org.apache.kafka.clients.producer.KafkaProducer;</p>
+<p>import org.apache.kafka.clients.producer.ProducerRecord;</p>
+<p>import java.util.Properties;</p>
+<p>public class CustomProducerAck {</p>
+<p>  public static void main(String[] args) throws InterruptedException {</p>
+<p>​    &#x2F;&#x2F; 1. 创建kafka生产者的配置对象</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    &#x2F;&#x2F; 2. 给kafka配置对象添加配置信息：bootstrap.servers</p>
+<p>​    properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, “hadoop102:9092”);</p>
+<p>​    </p>
+<p>​    &#x2F;&#x2F; key,value序列化（必须）：key.serializer，value.serializer</p>
+<p>​    properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</p>
+<p>​    properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());</p>
+<p>​    &#x2F;&#x2F; 设置acks</p>
+<p>​     properties.put(ProducerConfig.ACKS_CONFIG, “all”);</p>
+<p>​    &#x2F;&#x2F; 重试次数retries，默认是int最大值，2147483647</p>
+<p>​    properties.put(ProducerConfig.RETRIES_CONFIG, 3);</p>
+<p>​    &#x2F;&#x2F; 3. 创建kafka生产者对象</p>
+<p>​    KafkaProducer&lt;String, String&gt; kafkaProducer &#x3D; new KafkaProducer&lt;String, String&gt;(properties);</p>
+<p>​    &#x2F;&#x2F; 4. 调用send方法,发送消息</p>
+<p>​    for (int i &#x3D; 0; i &lt; 5; i++) {</p>
+<p>​      kafkaProducer.send(new ProducerRecord&lt;&gt;(“first”,”atguigu “ + i));</p>
+<p>​    }</p>
+<p>​    &#x2F;&#x2F; 5. 关闭资源</p>
+<p>​    kafkaProducer.close();</p>
+<p>  }</p>
+<p>} </p>
+<h2 id="3-7-生产经验——数据去重"><a href="#3-7-生产经验——数据去重" class="headerlink" title="3.7 生产经验——数据去重"></a>3.7 生产经验——数据去重</h2><h3 id="3-7-1-数据传递语义"><a href="#3-7-1-数据传递语义" class="headerlink" title="3.7.1 数据传递语义"></a>3.7.1 数据传递语义</h3><p><img src="/project/../post_picture/hive/clip_image038.gif" alt="img"></p>
+<h3 id="3-7-2-幂等性"><a href="#3-7-2-幂等性" class="headerlink" title="3.7.2 幂等性"></a>3.7.2 幂等性</h3><p><strong>1****）幂等性原理</strong></p>
+<p><strong><img src="/project/../post_picture/hive/clip_image040.gif" alt="img"></strong></p>
+<p><strong>2****）如何使用幂等性</strong></p>
+<p>开启参数<strong>enable.idempotence</strong> 默认为true，false关闭。</p>
+<h3 id="3-7-3-生产者事务"><a href="#3-7-3-生产者事务" class="headerlink" title="3.7.3 生产者事务"></a>3.7.3 生产者事务</h3><p>1）Kafka事务介绍</p>
+<p>0.11版本的Kafka同时引入了事务的特性，为了实现跨分区跨会话的事务，需要引入一个全局唯一的Transaction ID，并将Producer获得的PID和Transaction ID绑定。这样当Producer重启后就可以通过正在进行的Transaction ID获得原来的PID。</p>
+<p>为了管理Transaction，Kafka引入了一个新的组件Transaction Coordinator。Producer就是通过和Transaction Coordinator交互获得Transaction ID对应的任务状态。Transaction Coordinator还负责将事务所有写入Kafka的一个内部Topic，这样即使整个服务重启，由于事务状态得到保存，进行中的事务状态可以得到恢复，从而继续进行。</p>
+<p>注意：提前开启幂等性!!!</p>
+<h2 id="3-8-生产经验——数据有序"><a href="#3-8-生产经验——数据有序" class="headerlink" title="3.8 生产经验——数据有序"></a>3.8 生产经验——数据有序</h2><p><img src="/project/../post_picture/hive/clip_image042.gif" alt="img"></p>
+<h2 id="3-9-生产经验——数据乱序"><a href="#3-9-生产经验——数据乱序" class="headerlink" title="3.9 生产经验——数据乱序"></a>3.9 生产经验——数据乱序</h2><p><img src="/project/../post_picture/hive/clip_image044.gif" alt="img"></p>
+<h1 id="第4章-Kafka-Broker"><a href="#第4章-Kafka-Broker" class="headerlink" title="第4章 Kafka Broker"></a>第4章 Kafka Broker</h1><h2 id="4-1-Kafka-Broker工作流程"><a href="#4-1-Kafka-Broker工作流程" class="headerlink" title="4.1 Kafka Broker工作流程"></a>4.1 Kafka Broker工作流程</h2><h3 id="4-1-1-Zookeeper存储的Kafka信息"><a href="#4-1-1-Zookeeper存储的Kafka信息" class="headerlink" title="4.1.1 Zookeeper存储的Kafka信息"></a>4.1.1 Zookeeper存储的Kafka信息</h3><p>（1）启动Zookeeper客户端。</p>
+<p>[atguigu@hadoop102 zookeeper-3.5.7]$ bin&#x2F;zkCli.sh</p>
+<p>（2）通过ls命令可以查看kafka相关信息。</p>
+<p>[zk: localhost:2181(CONNECTED) 2] ls &#x2F;kafka</p>
+<p><img src="/project/../post_picture/hive/clip_image046.gif" alt="img"></p>
+<h3 id="4-1-2-Kafka-Broker总体工作流程"><a href="#4-1-2-Kafka-Broker总体工作流程" class="headerlink" title="4.1.2 Kafka Broker总体工作流程"></a>4.1.2 Kafka Broker总体工作流程</h3><p><img src="/project/../post_picture/hive/clip_image048.gif" alt="img"></p>
+<p><strong>1<strong><strong>）模拟Kafka</strong></strong>上下线，Zookeeper****中数据变化</strong></p>
+<p>​    （1）查看&#x2F;kafka&#x2F;brokers&#x2F;ids路径上的节点。</p>
+<p>[zk: localhost:2181(CONNECTED) 2] ls &#x2F;kafka&#x2F;brokers&#x2F;ids</p>
+<p>[0, 1, 2]</p>
+<p>​    （2）查看&#x2F;kafka&#x2F;controller路径上的数据。</p>
+<p>[zk: localhost:2181(CONNECTED) 15] get &#x2F;kafka&#x2F;controller</p>
+<p>{“version”:1,”brokerid”:0,”timestamp”:”1637292471777”}</p>
+<p>​    （3）查看&#x2F;kafka&#x2F;brokers&#x2F;topics&#x2F;first&#x2F;partitions&#x2F;0&#x2F;state路径上的数据。</p>
+<p>[zk: localhost:2181(CONNECTED) 16] get &#x2F;kafka&#x2F;brokers&#x2F;topics&#x2F;first&#x2F;partitions&#x2F;0&#x2F;state</p>
+<p>{“controller_epoch”:24,”leader”:0,”version”:1,”leader_epoch”:18,”isr”:[0,1,2]}</p>
+<p>（4）停止hadoop104上的kafka。</p>
+<p>[atguigu@hadoop104 kafka]$ bin&#x2F;kafka-server-stop.sh</p>
+<p>（5）再次查看&#x2F;kafka&#x2F;brokers&#x2F;ids路径上的节点。</p>
+<p>[zk: localhost:2181(CONNECTED) 3] ls &#x2F;kafka&#x2F;brokers&#x2F;ids</p>
+<p>[0, 1]</p>
+<p>​    （6）再次查看&#x2F;kafka&#x2F;controller路径上的数据。</p>
+<p>[zk: localhost:2181(CONNECTED) 15] get &#x2F;kafka&#x2F;controller</p>
+<p>{“version”:1,”brokerid”:0,”timestamp”:”1637292471777”}</p>
+<p>​    （7）再次查看&#x2F;kafka&#x2F;brokers&#x2F;topics&#x2F;first&#x2F;partitions&#x2F;0&#x2F;state路径上的数据。</p>
+<p>[zk: localhost:2181(CONNECTED) 16] get &#x2F;kafka&#x2F;brokers&#x2F;topics&#x2F;first&#x2F;partitions&#x2F;0&#x2F;state</p>
+<p>{“controller_epoch”:24,”leader”:0,”version”:1,”leader_epoch”:18,”isr”:[0,1]}</p>
+<p>（8）启动hadoop104上的kafka。</p>
+<p>[atguigu@hadoop104 kafka]$ bin&#x2F;kafka-server-start.sh -daemon .&#x2F;config&#x2F;server.properties</p>
+<p>（9）再次观察（1）、（2）、（3）步骤中的内容。</p>
+<h3 id="4-1-3-Broker重要参数"><a href="#4-1-3-Broker重要参数" class="headerlink" title="4.1.3 Broker重要参数"></a>4.1.3 Broker重要参数</h3><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>replica.lag.time.max.ms</td>
+<td>ISR中，如果Follower长时间未向Leader发送通信请求或同步数据，则该Follower将被踢出ISR。该时间阈值，默认30s。</td>
+</tr>
+<tr>
+<td>auto.leader.rebalance.enable</td>
+<td>默认是true。  自动Leader  Partition 平衡。</td>
+</tr>
+<tr>
+<td>leader.imbalance.per.broker.percentage</td>
+<td>默认是10%。每个broker允许的不平衡的leader的比率。如果每个broker超过了这个值，控制器会触发leader的平衡。</td>
+</tr>
+<tr>
+<td>leader.imbalance.check.interval.seconds</td>
+<td>默认值300秒。检查leader负载是否平衡的间隔时间。</td>
+</tr>
+<tr>
+<td>log.segment.bytes</td>
+<td>Kafka中log日志是分成一块块存储的，此配置是指log日志划分 成块的大小，默认值1G。</td>
+</tr>
+<tr>
+<td>log.index.interval.bytes</td>
+<td>默认4kb，kafka里面每当写入了4kb大小的日志（.log），然后就往index文件里面记录一个索引。</td>
+</tr>
+<tr>
+<td>log.retention.hours</td>
+<td>Kafka中数据保存的时间，默认7天。</td>
+</tr>
+<tr>
+<td>log.retention.minutes</td>
+<td>Kafka中数据保存的时间，分钟级别，默认关闭。</td>
+</tr>
+<tr>
+<td>log.retention.ms</td>
+<td>Kafka中数据保存的时间，毫秒级别，默认关闭。</td>
+</tr>
+<tr>
+<td>log.retention.check.interval.ms</td>
+<td>检查数据是否保存超时的间隔，默认是5分钟。</td>
+</tr>
+<tr>
+<td>log.retention.bytes</td>
+<td>默认等于-1，表示无穷大。超过设置的所有日志总大小，删除最早的segment。</td>
+</tr>
+<tr>
+<td>log.cleanup.policy</td>
+<td>默认是delete，表示所有数据启用删除策略；  如果设置值为compact，表示所有数据启用压缩策略。</td>
+</tr>
+<tr>
+<td>num.io.threads</td>
+<td>默认是8。负责写磁盘的线程数。整个参数值要占总核数的50%。</td>
+</tr>
+<tr>
+<td>num.replica.fetchers</td>
+<td>副本拉取线程数，这个参数占总核数的50%的1&#x2F;3</td>
+</tr>
+<tr>
+<td>num.network.threads</td>
+<td>默认是3。数据传输线程数，这个参数占总核数的50%的2&#x2F;3 。</td>
+</tr>
+<tr>
+<td>log.flush.interval.messages</td>
+<td>强制页缓存刷写到磁盘的条数，默认是long的最大值，9223372036854775807。一般不建议修改，交给系统自己管理。</td>
+</tr>
+<tr>
+<td>log.flush.interval.ms</td>
+<td>每隔多久，刷数据到磁盘，默认是null。一般不建议修改，交给系统自己管理。</td>
+</tr>
+</tbody></table>
+<h2 id="4-2-Kafka-副本"><a href="#4-2-Kafka-副本" class="headerlink" title="4.2 Kafka 副本"></a>4.2 Kafka 副本</h2><h3 id="4-2-1-副本基本信息"><a href="#4-2-1-副本基本信息" class="headerlink" title="4.2.1 副本基本信息"></a>4.2.1 副本基本信息</h3><p>（1）Kafka副本作用：提高数据可靠性。</p>
+<p>（2）Kafka默认副本1个，生产环境一般配置为2个，保证数据可靠性；太多副本会增加磁盘存储空间，增加网络上数据传输，降低效率。</p>
+<p>（3）Kafka中副本分为：Leader和Follower。Kafka生产者只会把数据发往Leader，然后Follower找Leader进行同步数据。</p>
+<p>（4）Kafka分区中的所有副本统称为AR（Assigned Repllicas）。</p>
+<p> AR &#x3D; ISR + OSR</p>
+<p><strong>ISR</strong>，表示和Leader保持同步的Follower集合。如果Follower长时间未向Leader发送通信请求或同步数据，则该Follower将被踢出ISR。该时间阈值由<strong>replica.lag.time.max.ms</strong>参数设定，默认30s。Leader发生故障之后，就会从ISR中选举新的Leader。</p>
+<p>​    <strong>OSR****，</strong>表示Follower与Leader副本同步时，延迟过多的副本。</p>
+<h3 id="4-2-2-Leader选举流程"><a href="#4-2-2-Leader选举流程" class="headerlink" title="4.2.2 Leader选举流程"></a>4.2.2 Leader选举流程</h3><p>Kafka集群中有一个broker的Controller会被选举为Controller Leader，负责管理集群broker的上下线，所有topic的分区副本分配和Leader选举等工作。</p>
+<p>Controller的信息同步工作是依赖于Zookeeper的。</p>
+<p><img src="/project/../post_picture/hive/clip_image050.gif" alt="img"></p>
+<p>假设有hadoop102、hadoop103、hadoop104、hadoop105等4台服务器。</p>
+<p>（1）创建一个新的topic，4个分区，4个副本</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –create –topic atguigu1 –partitions 4 –replication-factor 4</p>
+<p>Created topic atguigu1.</p>
+<p>（2）查看Leader分布情况</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –describe –topic atguigu1</p>
+<p>Topic: atguigu1  TopicId: awpgX_7WR-OX3Vl6HE8sVg PartitionCount: 4 ReplicationFactor: 4  Configs: segment.bytes&#x3D;1073741824</p>
+<p>  Topic: atguigu1  Partition: 0 Leader: 3 Replicas: 3,0,2,1 Isr: 3,0,2,1</p>
+<p>  Topic: atguigu1  Partition: 1 Leader: 1 Replicas: 1,2,3,0 Isr: 1,2,3,0</p>
+<p>  Topic: atguigu1  Partition: 2 Leader: 0 Replicas: 0,3,1,2 Isr: 0,3,1,2</p>
+<p>  Topic: atguigu1  Partition: 3 Leader: 2 Replicas: 2,1,0,3 Isr: 2,1,0,3</p>
+<p>（3）停止掉hadoop105的kafka进程，并查看Leader分区情况</p>
+<p>[atguigu@hadoop105 kafka]$ bin&#x2F;kafka-server-stop.sh</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –describe –topic atguigu1 </p>
+<p>Topic: atguigu1  TopicId: awpgX_7WR-OX3Vl6HE8sVg PartitionCount: 4 ReplicationFactor: 4  Configs: segment.bytes&#x3D;1073741824</p>
+<p>  Topic: atguigu1  Partition: 0 Leader: 0 Replicas: 3,0,2,1 Isr: 0,2,1</p>
+<p>  Topic: atguigu1  Partition: 1 Leader: 1 Replicas: 1,2,3,0 Isr: 1,2,0</p>
+<p>  Topic: atguigu1  Partition: 2 Leader: 0 Replicas: 0,3,1,2 Isr: 0,1,2</p>
+<p>  Topic: atguigu1  Partition: 3 Leader: 2 Replicas: 2,1,0,3 Isr: 2,1,0</p>
+<p>（4）停止掉hadoop104的kafka进程，并查看Leader分区情况</p>
+<p>[atguigu@hadoop104 kafka]$ bin&#x2F;kafka-server-stop.sh</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –describe –topic atguigu1 </p>
+<p>Topic: atguigu1  TopicId: awpgX_7WR-OX3Vl6HE8sVg PartitionCount: 4 ReplicationFactor: 4  Configs: segment.bytes&#x3D;1073741824</p>
+<p>  Topic: atguigu1  Partition: 0 Leader: 0 Replicas: 3,0,2,1 Isr: 0,1</p>
+<p>  Topic: atguigu1  Partition: 1 Leader: 1 Replicas: 1,2,3,0 Isr: 1,0</p>
+<p>  Topic: atguigu1  Partition: 2 Leader: 0 Replicas: 0,3,1,2 Isr: 0,1</p>
+<p>  Topic: atguigu1  Partition: 3 Leader: 1 Replicas: 2,1,0,3 Isr: 1,0</p>
+<p>（5）启动hadoop105的kafka进程，并查看Leader分区情况</p>
+<p>[atguigu@hadoop105 kafka]$ bin&#x2F;kafka-server-start.sh -daemon config&#x2F;server.properties</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –describe –topic atguigu1 </p>
+<p>Topic: atguigu1  TopicId: awpgX_7WR-OX3Vl6HE8sVg PartitionCount: 4 ReplicationFactor: 4  Configs: segment.bytes&#x3D;1073741824</p>
+<p>  Topic: atguigu1  Partition: 0 Leader: 0 Replicas: 3,0,2,1 Isr: 0,1,3</p>
+<p>  Topic: atguigu1  Partition: 1 Leader: 1 Replicas: 1,2,3,0 Isr: 1,0,3</p>
+<p>  Topic: atguigu1  Partition: 2 Leader: 0 Replicas: 0,3,1,2 Isr: 0,1,3</p>
+<p>  Topic: atguigu1  Partition: 3 Leader: 1 Replicas: 2,1,0,3 Isr: 1,0,3</p>
+<p>（6）启动hadoop104的kafka进程，并查看Leader分区情况</p>
+<p>[atguigu@hadoop104 kafka]$ bin&#x2F;kafka-server-start.sh -daemon config&#x2F;server.properties</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –describe –topic atguigu1 </p>
+<p>Topic: atguigu1  TopicId: awpgX_7WR-OX3Vl6HE8sVg PartitionCount: 4 ReplicationFactor: 4  Configs: segment.bytes&#x3D;1073741824</p>
+<p>  Topic: atguigu1  Partition: 0 Leader: 0 Replicas: 3,0,2,1 Isr: 0,1,3,2</p>
+<p>  Topic: atguigu1  Partition: 1 Leader: 1 Replicas: 1,2,3,0 Isr: 1,0,3,2</p>
+<p>  Topic: atguigu1  Partition: 2 Leader: 0 Replicas: 0,3,1,2 Isr: 0,1,3,2</p>
+<p>  Topic: atguigu1  Partition: 3 Leader: 1 Replicas: 2,1,0,3 Isr: 1,0,3,2</p>
+<p>（7）停止掉hadoop103的kafka进程，并查看Leader分区情况</p>
+<p>[atguigu@hadoop103 kafka]$ bin&#x2F;kafka-server-stop.sh</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –describe –topic atguigu1 </p>
+<p>Topic: atguigu1  TopicId: awpgX_7WR-OX3Vl6HE8sVg PartitionCount: 4 ReplicationFactor: 4  Configs: segment.bytes&#x3D;1073741824</p>
+<p>  Topic: atguigu1  Partition: 0 Leader: 0 Replicas: 3,0,2,1 Isr: 0,3,2</p>
+<p>  Topic: atguigu1  Partition: 1 Leader: 2 Replicas: 1,2,3,0 Isr: 0,3,2</p>
+<p>  Topic: atguigu1  Partition: 2 Leader: 0 Replicas: 0,3,1,2 Isr: 0,3,2</p>
+<p>  Topic: atguigu1  Partition: 3 Leader: 2 Replicas: 2,1,0,3 Isr: 0,3,2</p>
+<h3 id="4-2-3-Leader和Follower故障处理细节"><a href="#4-2-3-Leader和Follower故障处理细节" class="headerlink" title="4.2.3 Leader和Follower故障处理细节"></a>4.2.3 Leader和Follower故障处理细节</h3><p><strong><img src="/project/../post_picture/hive/clip_image052.gif" alt="img"></strong></p>
+<p><strong><img src="/project/../post_picture/hive/clip_image054.gif" alt="img"></strong></p>
+<h2 id="4-3-文件存储"><a href="#4-3-文件存储" class="headerlink" title="4.3 文件存储"></a>4.3 文件存储</h2><h3 id="4-3-1-文件存储机制"><a href="#4-3-1-文件存储机制" class="headerlink" title="4.3.1 文件存储机制"></a>4.3.1 文件存储机制</h3><p><strong>1<strong><strong>）Topic</strong></strong>数据的存储机制</strong></p>
+<p><img src="/project/../post_picture/hive/clip_image056.gif" alt="img"></p>
+<p><strong>2<strong><strong>）思考：Topic</strong></strong>数据到底存储在什么位置？</strong></p>
+<p>（1）启动生产者，并发送消息。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-producer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>&gt;hello world</p>
+<p>（2）查看hadoop102（或者hadoop103、hadoop104）的&#x2F;opt&#x2F;module&#x2F;kafka&#x2F;datas&#x2F;first-1（first-0、first-2）路径上的文件。</p>
+<p>[atguigu@hadoop104 first-1]$ ls</p>
+<p>00000000000000000092.index</p>
+<p>00000000000000000092.log</p>
+<p>00000000000000000092.snapshot</p>
+<p>00000000000000000092.timeindex</p>
+<p>leader-epoch-checkpoint</p>
+<p>partition.metadata</p>
+<p>（3）直接查看log日志，发现是乱码。</p>
+<p>[atguigu@hadoop104 first-1]$ cat 00000000000000000092.log </p>
+<p>\CYnF|©|©ÿÿÿÿÿÿÿÿÿÿÿÿÿÿ”hello world</p>
+<p>（4）通过工具查看index和log信息。</p>
+<p>[atguigu@hadoop104 first-1]$ kafka-run-class.sh kafka.tools.DumpLogSegments –files .&#x2F;00000000000000000000.index </p>
+<p>Dumping .&#x2F;00000000000000000000.index</p>
+<p>offset: 3 position: 152</p>
+<p>[atguigu@hadoop104 first-1]$ kafka-run-class.sh kafka.tools.DumpLogSegments –files .&#x2F;00000000000000000000.log</p>
+<p>Dumping datas&#x2F;first-0&#x2F;00000000000000000000.log</p>
+<p>Starting offset: 0</p>
+<p>baseOffset: 0 lastOffset: 1 count: 2 baseSequence: -1 lastSequence: -1 producerId: -1 producerEpoch: -1 partitionLeaderEpoch: 0 isTransactional: false isControl: false position: 0 CreateTime: 1636338440962 size: 75 magic: 2 compresscodec: none crc: 2745337109 isvalid: true</p>
+<p>baseOffset: 2 lastOffset: 2 count: 1 baseSequence: -1 lastSequence: -1 producerId: -1 producerEpoch: -1 partitionLeaderEpoch: 0 isTransactional: false isControl: false position: 75 CreateTime: 1636351749089 size: 77 magic: 2 compresscodec: none crc: 273943004 isvalid: true</p>
+<p>baseOffset: 3 lastOffset: 3 count: 1 baseSequence: -1 lastSequence: -1 producerId: -1 producerEpoch: -1 partitionLeaderEpoch: 0 isTransactional: false isControl: false position: 152 CreateTime: 1636351749119 size: 77 magic: 2 compresscodec: none crc: 106207379 isvalid: true</p>
+<p>baseOffset: 4 lastOffset: 8 count: 5 baseSequence: -1 lastSequence: -1 producerId: -1 producerEpoch: -1 partitionLeaderEpoch: 0 isTransactional: false isControl: false position: 229 CreateTime: 1636353061435 size: 141 magic: 2 compresscodec: none crc: 157376877 isvalid: true</p>
+<p>baseOffset: 9 lastOffset: 13 count: 5 baseSequence: -1 lastSequence: -1 producerId: -1 producerEpoch: -1 partitionLeaderEpoch: 0 isTransactional: false isControl: false position: 370 CreateTime: 1636353204051 size: 146 magic: 2 compresscodec: none crc: 4058582827 isvalid: true</p>
+<p><strong>3<strong><strong>）index</strong></strong>文件和log****文件详解</strong></p>
+<p><img src="/project/../post_picture/hive/clip_image058.gif" alt="img"></p>
+<p>说明：日志存储参数配置</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>log.segment.bytes</td>
+<td>Kafka中log日志是分成一块块存储的，此配置是指log日志划分 成块的大小，默认值1G。</td>
+</tr>
+<tr>
+<td>log.index.interval.bytes</td>
+<td>默认4kb，kafka里面每当写入了4kb大小的日志（.log），然后就往index文件里面记录一个索引。 稀疏索引。</td>
+</tr>
+</tbody></table>
+<h3 id="4-3-2-文件清理策略"><a href="#4-3-2-文件清理策略" class="headerlink" title="4.3.2 文件清理策略"></a>4.3.2 文件清理策略</h3><p>Kafka中默认的日志保存时间为7天，可以通过调整如下参数修改保存时间。</p>
+<p>l log.retention.hours，最低优先级小时，默认7天。</p>
+<p>l log.retention.minutes，分钟。</p>
+<p>l log.retention.ms，最高优先级毫秒。</p>
+<p>l log.retention.check.interval.ms，负责设置检查周期，默认5分钟。</p>
+<p>那么日志一旦超过了设置的时间，怎么处理呢？</p>
+<p>Kafka中提供的日志清理策略有delete和compact两种。</p>
+<p>1）delete日志删除：将过期数据删除</p>
+<p>l log.cleanup.policy &#x3D; delete  所有数据启用删除策略</p>
+<p>（1）基于时间：默认打开。以segment中所有记录中的最大时间戳作为该文件时间戳。</p>
+<p>（2）基于大小：默认关闭。超过设置的所有日志总大小，删除最早的segment。</p>
+<p>log.retention.bytes，默认等于-1，表示无穷大。</p>
+<p><strong>思考：</strong>如果一个segment中有一部分数据过期，一部分没有过期，怎么处理？</p>
+<p><img src="/project/../post_picture/hive/clip_image060.jpg" alt="img"></p>
+<p>2）compact日志压缩</p>
+<p><img src="/project/../post_picture/hive/clip_image062.gif" alt="img"></p>
+<h2 id="4-4-高效读写数据"><a href="#4-4-高效读写数据" class="headerlink" title="4.4 高效读写数据"></a>4.4 高效读写数据</h2><p><strong>1<strong><strong>）</strong></strong>Kafka****本身是分布式集群，可以采用分区技术，并行度高</strong></p>
+<p><strong>2****）读数据采用稀疏索引，可以快速定位要消费的数据</strong></p>
+<p><strong>3****）顺序写磁盘</strong></p>
+<p>Kafka的producer生产数据，要写入到log文件中，写的过程是一直追加到文件末端，为顺序写。<strong>官网有数据表明</strong>，同样的磁盘，顺序写能到600M&#x2F;s，而随机写只有100K&#x2F;s。这与磁盘的机械机构有关，顺序写之所以快，是因为其省去了大量磁头寻址的时间。</p>
+<p><img src="/project/../post_picture/hive/clip_image064.jpg" alt="img"></p>
+<p><strong>4****）页缓存 +</strong> <strong>零拷贝技术</strong></p>
+<p><img src="/project/../post_picture/hive/clip_image066.gif" alt="img"></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>log.flush.interval.messages</td>
+<td>强制页缓存刷写到磁盘的条数，默认是long的最大值，9223372036854775807。一般不建议修改，交给系统自己管理。</td>
+</tr>
+<tr>
+<td>log.flush.interval.ms</td>
+<td>每隔多久，刷数据到磁盘，默认是null。一般不建议修改，交给系统自己管理。</td>
+</tr>
+</tbody></table>
+<h1 id="第5章-Kafka消费者"><a href="#第5章-Kafka消费者" class="headerlink" title="第5章 Kafka消费者"></a>第5章 Kafka消费者</h1><h2 id="5-1-Kafka消费方式"><a href="#5-1-Kafka消费方式" class="headerlink" title="5.1 Kafka消费方式"></a>5.1 Kafka消费方式</h2><p><img src="/project/../post_picture/hive/clip_image068.gif" alt="img"></p>
+<h2 id="5-2-Kafka消费者工作流程"><a href="#5-2-Kafka消费者工作流程" class="headerlink" title="5.2 Kafka消费者工作流程"></a>5.2 Kafka消费者工作流程</h2><h3 id="5-2-1-消费者总体工作流程"><a href="#5-2-1-消费者总体工作流程" class="headerlink" title="5.2.1 消费者总体工作流程"></a>5.2.1 消费者总体工作流程</h3><p><img src="/project/../post_picture/hive/clip_image070.gif" alt="img"></p>
+<h3 id="5-2-2-消费者组原理"><a href="#5-2-2-消费者组原理" class="headerlink" title="5.2.2 消费者组原理"></a>5.2.2 消费者组原理</h3><p><img src="/project/../post_picture/hive/clip_image072.gif" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image074.gif" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image076.gif" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image078.gif" alt="img"></p>
+<h3 id="5-2-3-消费者重要参数"><a href="#5-2-3-消费者重要参数" class="headerlink" title="5.2.3 消费者重要参数"></a>5.2.3 消费者重要参数</h3><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>bootstrap.servers</td>
+<td>向Kafka集群建立初始连接用到的host&#x2F;port列表。</td>
+</tr>
+<tr>
+<td>key.deserializer和value.deserializer</td>
+<td>指定接收消息的key和value的反序列化类型。一定要写全类名。</td>
+</tr>
+<tr>
+<td>group.id</td>
+<td>标记消费者所属的消费者组。</td>
+</tr>
+<tr>
+<td>enable.auto.commit</td>
+<td>默认值为true，消费者会自动周期性地向服务器提交偏移量。</td>
+</tr>
+<tr>
+<td>auto.commit.interval.ms</td>
+<td>如果设置了  enable.auto.commit 的值为true， 则该值定义了消费者偏移量向Kafka提交的频率，默认5s。</td>
+</tr>
+<tr>
+<td>auto.offset.reset</td>
+<td>当Kafka中没有初始偏移量或当前偏移量在服务器中不存在（如，数据被删除了），该如何处理？ earliest：自动重置偏移量到最早的偏移量。  latest：默认，自动重置偏移量为最新的偏移量。 none：如果消费组原来的（previous）偏移量不存在，则向消费者抛异常。 anything：向消费者抛异常。</td>
+</tr>
+<tr>
+<td>offsets.topic.num.partitions</td>
+<td>__consumer_offsets的分区数，默认是50个分区。</td>
+</tr>
+<tr>
+<td>heartbeat.interval.ms</td>
+<td>Kafka消费者和coordinator之间的心跳时间，默认3s。  该条目的值必须小于  session.timeout.ms ，也不应该高于 session.timeout.ms 的1&#x2F;3。</td>
+</tr>
+<tr>
+<td>session.timeout.ms</td>
+<td>Kafka消费者和coordinator之间连接超时时间，默认45s。超过该值，该消费者被移除，消费者组执行再平衡。</td>
+</tr>
+<tr>
+<td>max.poll.interval.ms</td>
+<td>消费者处理消息的最大时长，默认是5分钟。超过该值，该消费者被移除，消费者组执行再平衡。</td>
+</tr>
+<tr>
+<td>fetch.min.bytes</td>
+<td>默认1个字节。消费者获取服务器端一批消息最小的字节数。</td>
+</tr>
+<tr>
+<td>fetch.max.wait.ms</td>
+<td>默认500ms。如果没有从服务器端获取到一批数据的最小字节数。该时间到，仍然会返回数据。</td>
+</tr>
+<tr>
+<td>fetch.max.bytes</td>
+<td>默认Default: 52428800（50 m）。消费者获取服务器端一批消息最大的字节数。如果服务器端一批次的数据大于该值（50m）仍然可以拉取回来这批数据，因此，这不是一个绝对最大值。一批次的大小受message.max.bytes （broker config）or max.message.bytes （topic config）影响。</td>
+</tr>
+<tr>
+<td>max.poll.records</td>
+<td>一次poll拉取数据返回消息的最大条数，默认是500条。</td>
+</tr>
+</tbody></table>
+<h2 id="5-3-消费者API"><a href="#5-3-消费者API" class="headerlink" title="5.3 消费者API"></a>5.3 消费者API</h2><h3 id="5-3-1-独立消费者案例（订阅主题）"><a href="#5-3-1-独立消费者案例（订阅主题）" class="headerlink" title="5.3.1 独立消费者案例（订阅主题）"></a>5.3.1 独立消费者案例（订阅主题）</h3><p>1）需求：</p>
+<p>​    创建一个独立消费者，消费first主题中数据。</p>
+<p><img src="/project/../post_picture/hive/clip_image080.jpg" alt="img"></p>
+<p><strong>注意：</strong>在消费者API代码中必须配置消费者组id。命令行启动消费者不填写消费者组id会被自动填写随机的消费者组id。</p>
+<p>2）实现步骤</p>
+<p>​    （1）创建包名：com.atguigu.kafka.consumer</p>
+<p>​    （2）编写代码</p>
+<p>package com.atguigu.kafka.consumer;</p>
+<p>import org.apache.kafka.clients.consumer.ConsumerConfig;</p>
+<p>import org.apache.kafka.clients.consumer.ConsumerRecord;</p>
+<p>import org.apache.kafka.clients.consumer.ConsumerRecords;</p>
+<p>import org.apache.kafka.clients.consumer.KafkaConsumer;</p>
+<p>import java.time.Duration;</p>
+<p>import java.util.ArrayList;</p>
+<p>import java.util.Properties;</p>
+<p>public class CustomConsumer {</p>
+<p>  public static void main(String[] args) {</p>
+<p>​    &#x2F;&#x2F; 1.创建消费者的配置对象</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    &#x2F;&#x2F; 2.给消费者配置对象添加参数</p>
+<p>​    properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, “hadoop102:9092”);</p>
+<p>​    &#x2F;&#x2F; 配置序列化 必须</p>
+<p>properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());</p>
+<p>​    properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());</p>
+<p>​    &#x2F;&#x2F; 配置消费者组（组名任意起名） 必须</p>
+<p>​    properties.put(ConsumerConfig.GROUP_ID_CONFIG, “test”);</p>
+<p>​    &#x2F;&#x2F; 创建消费者对象</p>
+<p>​    KafkaConsumer&lt;String, String&gt; kafkaConsumer &#x3D; new KafkaConsumer&lt;String, String&gt;(properties);</p>
+<p>​    &#x2F;&#x2F; 注册要消费的主题（可以消费多个主题）</p>
+<p>​    ArrayList<String> topics &#x3D; new ArrayList&lt;&gt;();</p>
+<p>​    topics.add(“first”);</p>
+<p>​    kafkaConsumer.subscribe(topics);</p>
+<p>​    &#x2F;&#x2F; 拉取数据打印</p>
+<p>​    while (true) {</p>
+<p>​      &#x2F;&#x2F; 设置1s中消费一批数据</p>
+<p>​      ConsumerRecords&lt;String, String&gt; consumerRecords &#x3D; kafkaConsumer.poll(Duration.ofSeconds(1));</p>
+<p>​      &#x2F;&#x2F; 打印消费到的数据</p>
+<p>​      for (ConsumerRecord&lt;String, String&gt; consumerRecord : consumerRecords) {</p>
+<p>​        System.out.println(consumerRecord);</p>
+<p>​      }</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>3）测试</p>
+<p>​    （1）在IDEA中执行消费者程序。</p>
+<p>​    （2）在Kafka集群控制台，创建Kafka生产者，并输入数据。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-producer.sh –bootstrap-server hadoop102:9092 –topic first</p>
+<p>&gt;hello</p>
+<p>​    （3）在IDEA控制台观察接收到的数据。</p>
+<p>ConsumerRecord(topic &#x3D; first, partition &#x3D; 1, leaderEpoch &#x3D; 3, offset &#x3D; 0, CreateTime &#x3D; 1629160841112, serialized key size &#x3D; -1, serialized value size &#x3D; 5, headers &#x3D; RecordHeaders(headers &#x3D; [], isReadOnly &#x3D; false), key &#x3D; null, value &#x3D; hello)</p>
+<h3 id="5-3-2-消费者组案例"><a href="#5-3-2-消费者组案例" class="headerlink" title="5.3.2 消费者组案例"></a>5.3.2 消费者组案例</h3><p>1）需求：测试同一个主题的分区数据，只能由一个消费者组中的一个消费。</p>
+<p><img src="/project/../post_picture/hive/clip_image082.jpg" alt="img"></p>
+<p>2）案例实操</p>
+<p>​    （1）复制一份基础消费者的代码，在IDEA中同时启动，即可启动同一个消费者组中的两个消费者。</p>
+<p>package com.atguigu.kafka.consumer;</p>
+<p>import org.apache.kafka.clients.consumer.ConsumerConfig;</p>
+<p>import org.apache.kafka.clients.consumer.ConsumerRecord;</p>
+<p>import org.apache.kafka.clients.consumer.ConsumerRecords;</p>
+<p>import org.apache.kafka.clients.consumer.KafkaConsumer;</p>
+<p>import java.time.Duration;</p>
+<p>import java.util.ArrayList;</p>
+<p>import java.util.Properties;</p>
+<p>public class CustomConsumer1 {</p>
+<p>  public static void main(String[] args) {</p>
+<p>​    &#x2F;&#x2F; 1.创建消费者的配置对象</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    &#x2F;&#x2F; 2.给消费者配置对象添加参数</p>
+<p>​    properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, “hadoop102:9092”);</p>
+<p>​    &#x2F;&#x2F; 配置序列化 必须</p>
+<p>​    properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());</p>
+<p>​    properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());</p>
+<p>​    &#x2F;&#x2F; 配置消费者组 必须</p>
+<p>​    properties.put(ConsumerConfig.GROUP_ID_CONFIG, “test”);</p>
+<p>​    &#x2F;&#x2F; 创建消费者对象</p>
+<p>​    KafkaConsumer&lt;String, String&gt; kafkaConsumer &#x3D; new KafkaConsumer&lt;String, String&gt;(properties);</p>
+<p>​    &#x2F;&#x2F; 注册主题</p>
+<p>​    ArrayList<String> topics &#x3D; new ArrayList&lt;&gt;();</p>
+<p>​    topics.add(“first”);</p>
+<p>​    kafkaConsumer.subscribe(topics);</p>
+<p>​    &#x2F;&#x2F; 拉取数据打印</p>
+<p>​    while (true) {</p>
+<p>​      &#x2F;&#x2F; 设置1s中消费一批数据</p>
+<p>​      ConsumerRecords&lt;String, String&gt; consumerRecords &#x3D; kafkaConsumer.poll(Duration.ofSeconds(1));</p>
+<p>​      &#x2F;&#x2F; 打印消费到的数据</p>
+<p>​      for (ConsumerRecord&lt;String, String&gt; consumerRecord : consumerRecords) {</p>
+<p>​        System.out.println(consumerRecord);</p>
+<p>​      }</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p>​    （2）启动代码中的生产者发送消息，在IDEA控制台即可看到两个消费者在消费不同分区的数据（如果只发生到一个分区，可以在发送时增加延迟代码Thread.sleep(2);）。</p>
+<p>ConsumerRecord(topic &#x3D; first, partition &#x3D; 0, leaderEpoch &#x3D; 2, offset &#x3D; 3, CreateTime &#x3D; 1629169606820, serialized key size &#x3D; -1, serialized value size &#x3D; 8, headers &#x3D; RecordHeaders(headers &#x3D; [], isReadOnly &#x3D; false), key &#x3D; null, value &#x3D; hello1)</p>
+<p>ConsumerRecord(topic &#x3D; first, partition &#x3D; 1, leaderEpoch &#x3D; 3, offset &#x3D; 2, CreateTime &#x3D; 1629169609524, serialized key size &#x3D; -1, serialized value size &#x3D; 6, headers &#x3D; RecordHeaders(headers &#x3D; [], isReadOnly &#x3D; false), key &#x3D; null, value &#x3D; hello2)</p>
+<p>ConsumerRecord(topic &#x3D; first, partition &#x3D; 2, leaderEpoch &#x3D; 3, offset &#x3D; 21, CreateTime &#x3D; 1629169611884, serialized key size &#x3D; -1, serialized value size &#x3D; 6, headers &#x3D; RecordHeaders(headers &#x3D; [], isReadOnly &#x3D; false), key &#x3D; null, value &#x3D; hello3)</p>
+<p>​    （3）重新发送到一个全新的主题中，由于默认创建的主题分区数为1，可以看到只能有一个消费者消费到数据。</p>
+<p><img src="/project/../post_picture/hive/clip_image084.jpg" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image086.jpg" alt="img"></p>
+<h2 id="5-4-生产经验——分区的分配以及再平衡"><a href="#5-4-生产经验——分区的分配以及再平衡" class="headerlink" title="5.4 生产经验——分区的分配以及再平衡"></a>5.4 生产经验——分区的分配以及再平衡</h2><p><img src="/project/../post_picture/hive/clip_image088.gif" alt="img"></p>
+<table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>heartbeat.interval.ms</td>
+<td>Kafka消费者和coordinator之间的心跳时间，默认3s。  该条目的值必须小于 session.timeout.ms，也不应该高于 session.timeout.ms 的1&#x2F;3。</td>
+</tr>
+<tr>
+<td>session.timeout.ms</td>
+<td>Kafka消费者和coordinator之间连接超时时间，默认45s。超过该值，该消费者被移除，消费者组执行再平衡。</td>
+</tr>
+<tr>
+<td>max.poll.interval.ms</td>
+<td>消费者处理消息的最大时长，默认是5分钟。超过该值，该消费者被移除，消费者组执行再平衡。</td>
+</tr>
+<tr>
+<td>partition.assignment.strategy</td>
+<td>消费者分区分配策略，默认策略是Range + CooperativeSticky。Kafka可以同时使用多个分区分配策略。可以选择的策略包括：Range、RoundRobin、Sticky、CooperativeSticky</td>
+</tr>
+</tbody></table>
+<h3 id="5-4-1-Range以及再平衡"><a href="#5-4-1-Range以及再平衡" class="headerlink" title="5.4.1 Range以及再平衡"></a>5.4.1 Range以及再平衡</h3><p><strong>1<strong><strong>）Range</strong></strong>分区策略原理</strong></p>
+<p><strong><img src="/project/../post_picture/hive/clip_image090.gif" alt="img"></strong></p>
+<p><strong>2<strong><strong>）Range</strong></strong>分区分配策略案例</strong></p>
+<p>（1）修改主题first为7个分区。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –alter –topic first –partitions 7</p>
+<p>注意：分区数可以增加，但是不能减少。</p>
+<p>（2）复制CustomConsumer类，创建CustomConsumer2。这样可以由三个消费者CustomConsumer、CustomConsumer1、CustomConsumer2组成消费者组，组名都为“test”，同时启动3个消费者。</p>
+<p><img src="/project/../post_picture/hive/clip_image092.jpg" alt="img"></p>
+<p>（3）启动CustomProducer生产者，发送500条消息，随机发送到不同的分区。</p>
+<p>package com.atguigu.kafka.producer;</p>
+<p>import org.apache.kafka.clients.producer.KafkaProducer;</p>
+<p>import org.apache.kafka.clients.producer.ProducerConfig;</p>
+<p>import org.apache.kafka.clients.producer.ProducerRecord;</p>
+<p>import java.util.Properties;</p>
+<p>public class CustomProducer {</p>
+<p>  public static void main(String[] args) throws InterruptedException {</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, “hadoop102:9092”);</p>
+<p>​    properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());</p>
+<p>​    properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());</p>
+<p>​    KafkaProducer&lt;String, String&gt; kafkaProducer &#x3D; new KafkaProducer&lt;&gt;(properties);</p>
+<p>​    for (int i &#x3D; 0; i &lt; 7; i++) {</p>
+<p>​      kafkaProducer.send(new ProducerRecord&lt;&gt;(“first”, i, “test”, “atguigu”));</p>
+<p>​    }</p>
+<p>​     kafkaProducer.close();</p>
+<p>  }</p>
+<p>}</p>
+<p>​    说明：Kafka默认的分区分配策略就是Range + CooperativeSticky，所以不需要修改策略。</p>
+<p>（4）观看3个消费者分别消费哪些分区的数据。</p>
+<p><img src="/project/../post_picture/hive/clip_image094.jpg" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image096.jpg" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image098.jpg" alt="img"></p>
+<p><strong>3<strong><strong>）Range</strong></strong>分区分配再平衡案例</strong></p>
+<p>（1）停止掉0号消费者，快速重新发送消息观看结果（45s以内，越快越好）。</p>
+<p>1号消费者：消费到3、4号分区数据。</p>
+<p>2号消费者：消费到5、6号分区数据。</p>
+<p>0号消费者的任务会整体被分配到1号消费者或者2号消费者。</p>
+<p>说明：0号消费者挂掉后，消费者组需要按照超时时间45s来判断它是否退出，所以需要等待，时间到了45s后，判断它真的退出就会把任务分配给其他broker执行。</p>
+<p>（2）再次重新发送消息观看结果（45s以后）。</p>
+<p>1号消费者：消费到0、1、2、3号分区数据。</p>
+<p>2号消费者：消费到4、5、6号分区数据。</p>
+<p>说明：消费者0已经被踢出消费者组，所以重新按照range方式分配。</p>
+<h3 id="5-4-2-RoundRobin以及再平衡"><a href="#5-4-2-RoundRobin以及再平衡" class="headerlink" title="5.4.2 RoundRobin以及再平衡"></a>5.4.2 RoundRobin以及再平衡</h3><p><strong>1<strong><strong>）RoundRobin</strong></strong>分区策略原理</strong></p>
+<p><strong><img src="/project/../post_picture/hive/clip_image100.gif" alt="img"></strong></p>
+<p><strong>2<strong><strong>）RoundRobin</strong></strong>分区分配策略案例</strong></p>
+<p>（1）依次在CustomConsumer、CustomConsumer1、CustomConsumer2三个消费者代码中修改分区分配策略为RoundRobin。</p>
+<p>&#x2F;&#x2F; 修改分区分配策略</p>
+<p>properties.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, “org.apache.kafka.clients.consumer.RoundRobinAssignor”);</p>
+<p>（2）重启3个消费者，重复发送消息的步骤，观看分区结果。</p>
+<p><img src="/project/../post_picture/hive/clip_image102.jpg" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image104.jpg" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image106.jpg" alt="img"></p>
+<p><strong>3<strong><strong>）RoundRobin</strong></strong>分区分配再平衡案例</strong></p>
+<p>（1）停止掉0号消费者，快速重新发送消息观看结果（45s以内，越快越好）。</p>
+<p>1号消费者：消费到2、5号分区数据</p>
+<p>2号消费者：消费到4、1号分区数据</p>
+<p>0号消费者的任务会按照RoundRobin的方式，把数据轮询分成0 、6和3号分区数据，分别由1号消费者或者2号消费者消费。</p>
+<p>说明：0号消费者挂掉后，消费者组需要按照超时时间45s来判断它是否退出，所以需要等待，时间到了45s后，判断它真的退出就会把任务分配给其他broker执行。</p>
+<p>（2）再次重新发送消息观看结果（45s以后）。</p>
+<p>1号消费者：消费到0、2、4、6号分区数据</p>
+<p>2号消费者：消费到1、3、5号分区数据</p>
+<p>说明：消费者0已经被踢出消费者组，所以重新按照RoundRobin方式分配。</p>
+<h3 id="5-4-3-Sticky以及再平衡"><a href="#5-4-3-Sticky以及再平衡" class="headerlink" title="5.4.3 Sticky以及再平衡"></a>5.4.3 Sticky以及再平衡</h3><p><strong>粘性分区定义：</strong>可以理解为分配的结果带有“粘性的”。即在执行一次新的分配之前，考虑上一次分配的结果，尽量少的调整分配的变动，可以节省大量的开销。</p>
+<p>粘性分区是Kafka从0.11.x版本开始引入这种分配策略，首先会尽量均衡的放置分区到消费者上面，在出现同一消费者组内消费者出现问题的时候，会尽量保持原有分配的分区不变化。</p>
+<p>1）需求</p>
+<p>​    设置主题为first，7个分区；准备3个消费者，采用粘性分区策略，并进行消费，观察消费分配情况。然后再停止其中一个消费者，再次观察消费分配情况。</p>
+<p>2）步骤</p>
+<p>（1）修改分区分配策略为粘性。</p>
+<p>注意：3个消费者都应该注释掉，之后重启3个消费者，如果出现报错，全部停止等会再重启，或者修改为全新的消费者组。</p>
+<p>&#x2F;&#x2F; 修改分区分配策略</p>
+<p>ArrayList<String> startegys &#x3D; new ArrayList&lt;&gt;();</p>
+<p>startegys.add(“org.apache.kafka.clients.consumer.StickyAssignor”);</p>
+<p>properties.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, startegys);</p>
+<p>（2）使用同样的生产者发送500条消息。</p>
+<p>可以看到会尽量保持分区的个数近似划分分区。</p>
+<p><img src="/project/../post_picture/hive/clip_image108.jpg" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image110.jpg" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image112.jpg" alt="img"></p>
+<p><strong>3<strong><strong>）Sticky</strong></strong>分区分配再平衡案例</strong></p>
+<p>（1）停止掉0号消费者，快速重新发送消息观看结果（45s以内，越快越好）。</p>
+<p>1号消费者：消费到2、5、3号分区数据。</p>
+<p>2号消费者：消费到4、6号分区数据。</p>
+<p>0号消费者的任务会按照粘性规则，尽可能均衡的随机分成0和1号分区数据，分别由1号消费者或者2号消费者消费。</p>
+<p>说明：0号消费者挂掉后，消费者组需要按照超时时间45s来判断它是否退出，所以需要等待，时间到了45s后，判断它真的退出就会把任务分配给其他broker执行。</p>
+<p>（2）再次重新发送消息观看结果（45s以后）。</p>
+<p>1号消费者：消费到2、3、5号分区数据。</p>
+<p>2号消费者：消费到0、1、4、6号分区数据。</p>
+<p>说明：消费者0已经被踢出消费者组，所以重新按照粘性方式分配。</p>
+<h2 id="5-5-offset位移"><a href="#5-5-offset位移" class="headerlink" title="5.5 offset位移"></a>5.5 offset位移</h2><h3 id="5-5-1-offset的默认维护位置"><a href="#5-5-1-offset的默认维护位置" class="headerlink" title="5.5.1 offset的默认维护位置"></a>5.5.1 offset的默认维护位置</h3><p><img src="/project/../post_picture/hive/clip_image114.gif" alt="img"></p>
+<p>__consumer_offsets主题里面采用key和value的方式存储数据。key是group.id+topic+分区号，value就是当前offset的值。每隔一段时间，kafka内部会对这个topic进行compact，也就是每个group.id+topic+分区号就保留最新数据。</p>
+<p><strong>1<strong><strong>）消费offset</strong></strong>案例</strong></p>
+<p>（0）思想：__consumer_offsets为Kafka中的topic，那就可以通过消费者进行消费。</p>
+<p>（1）在配置文件config&#x2F;consumer.properties中添加配置exclude.internal.topics&#x3D;false，默认是true，表示不能消费系统主题。为了查看该系统主题数据，所以该参数修改为false。</p>
+<p>（2）采用命令行方式，创建一个新的topic。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-topics.sh –bootstrap-server hadoop102:9092 –create –topic atguigu –partitions 2 –replication-factor 2</p>
+<p>（3）启动生产者往atguigu生产数据。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-producer.sh –topic atguigu –bootstrap-server hadoop102:9092</p>
+<p>（4）启动消费者消费atguigu数据。</p>
+<p>[atguigu@hadoop104 kafka]$ bin&#x2F;kafka-console-consumer.sh –bootstrap-server hadoop102:9092 –topic atguigu –group test</p>
+<p>注意：指定消费者组名称，更好观察数据存储位置（key是group.id + topic + 分区号）。</p>
+<p>（5）查看消费者消费主题__consumer_offsets。</p>
+<p>[atguigu@hadoop102 kafka]$ bin&#x2F;kafka-console-consumer.sh –topic __consumer_offsets –bootstrap-server hadoop102:9092 –consumer.config config&#x2F;consumer.properties –formatter “kafka.coordinator.group.GroupMetadataManager$OffsetsMessageFormatter” –from-beginning</p>
+<p>[offset,atguigu,1]::OffsetAndMetadata(offset&#x3D;7, leaderEpoch&#x3D;Optional[0], metadata&#x3D;, commitTimestamp&#x3D;1622442520203, expireTimestamp&#x3D;None)</p>
+<p>[offset,atguigu,0]::OffsetAndMetadata(offset&#x3D;8, leaderEpoch&#x3D;Optional[0], metadata&#x3D;, commitTimestamp&#x3D;1622442520203, expireTimestamp&#x3D;None)</p>
+<h3 id="5-5-2-自动提交offset"><a href="#5-5-2-自动提交offset" class="headerlink" title="5.5.2 自动提交offset"></a>5.5.2 自动提交offset</h3><p><img src="/project/../post_picture/hive/clip_image116.gif" alt="img"></p>
+<table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>enable.auto.commit</td>
+<td>默认值为true，消费者会自动周期性地向服务器提交偏移量。</td>
+</tr>
+<tr>
+<td>auto.commit.interval.ms</td>
+<td>如果设置了  enable.auto.commit 的值为true， 则该值定义了消费者偏移量向Kafka提交的频率，默认5s。</td>
+</tr>
+</tbody></table>
+<p><strong>1****）消费者自动提交offset</strong></p>
+<p>package com.atguigu.kafka.consumer;</p>
+<p>import org.apache.kafka.clients.consumer.ConsumerConfig;</p>
+<p>import org.apache.kafka.clients.consumer.ConsumerRecord;</p>
+<p>import org.apache.kafka.clients.consumer.ConsumerRecords;</p>
+<p>import org.apache.kafka.clients.consumer.KafkaConsumer;</p>
+<p>import java.util.Arrays;</p>
+<p>import java.util.Properties;</p>
+<p>public class CustomConsumerAutoOffset {</p>
+<p>  public static void main(String[] args) {</p>
+<p>​    &#x2F;&#x2F; 1. 创建kafka消费者配置类</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    &#x2F;&#x2F; 2. 添加配置参数</p>
+<p>​    &#x2F;&#x2F; 添加连接</p>
+<p>​    properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, “hadoop102:9092”);</p>
+<p>​    </p>
+<p>​    &#x2F;&#x2F; 配置序列化 必须</p>
+<p>properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, “org.apache.kafka.common.serialization.StringDeserializer”);</p>
+<p>​    properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, “org.apache.kafka.common.serialization.StringDeserializer”);</p>
+<p>​    &#x2F;&#x2F; 配置消费者组</p>
+<p>​    properties.put(ConsumerConfig.GROUP_ID_CONFIG, “test”);</p>
+<p>​    &#x2F;&#x2F; 是否自动提交offset</p>
+<p>​    properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);</p>
+<p>​    &#x2F;&#x2F; 提交offset的时间周期1000ms，默认5s</p>
+<p>properties.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, 1000);</p>
+<p>​    &#x2F;&#x2F;3. 创建kafka消费者</p>
+<p>​    KafkaConsumer&lt;String, String&gt; consumer &#x3D; new KafkaConsumer&lt;&gt;(properties);</p>
+<p>​    &#x2F;&#x2F;4. 设置消费主题 形参是列表</p>
+<p>​    consumer.subscribe(Arrays.asList(“first”));</p>
+<p>​    &#x2F;&#x2F;5. 消费数据</p>
+<p>​    while (true){</p>
+<p>​      &#x2F;&#x2F; 读取消息</p>
+<p>​      ConsumerRecords&lt;String, String&gt; consumerRecords &#x3D; consumer.poll(Duration.ofSeconds(1));</p>
+<p>​      &#x2F;&#x2F; 输出消息</p>
+<p>​      for (ConsumerRecord&lt;String, String&gt; consumerRecord : consumerRecords) {</p>
+<p>​        System.out.println(consumerRecord.value());</p>
+<p>​      }</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<h3 id="5-5-3-手动提交offset"><a href="#5-5-3-手动提交offset" class="headerlink" title="5.5.3 手动提交offset"></a>5.5.3 手动提交offset</h3><p><img src="/project/../post_picture/hive/clip_image118.gif" alt="img"></p>
+<p><strong>1****）同步提交offset</strong></p>
+<p>由于同步提交offset有失败重试机制，故更加可靠，但是由于一直等待提交结果，提交的效率比较低。以下为同步提交offset的示例。</p>
+<p>package com.atguigu.kafka.consumer;</p>
+<p>import org.apache.kafka.clients.consumer.ConsumerConfig;</p>
+<p>import org.apache.kafka.clients.consumer.ConsumerRecord;</p>
+<p>import org.apache.kafka.clients.consumer.ConsumerRecords;</p>
+<p>import org.apache.kafka.clients.consumer.KafkaConsumer;</p>
+<p>import java.util.Arrays;</p>
+<p>import java.util.Properties;</p>
+<p>public class CustomConsumerByHandSync {</p>
+<p>  public static void main(String[] args) {</p>
+<p>​    &#x2F;&#x2F; 1. 创建kafka消费者配置类</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    &#x2F;&#x2F; 2. 添加配置参数</p>
+<p>​    &#x2F;&#x2F; 添加连接</p>
+<p>​    properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, “hadoop102:9092”);</p>
+<p>​    &#x2F;&#x2F; 配置序列化 必须</p>
+<p>properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, “org.apache.kafka.common.serialization.StringDeserializer”);</p>
+<p>​    properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, “org.apache.kafka.common.serialization.StringDeserializer”);</p>
+<p>​    &#x2F;&#x2F; 配置消费者组</p>
+<p>​    properties.put(ConsumerConfig.GROUP_ID_CONFIG, “test”);</p>
+<p>​    &#x2F;&#x2F; 是否自动提交offset</p>
+<p>​    properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);</p>
+<p>​    &#x2F;&#x2F;3. 创建kafka消费者</p>
+<p>​    KafkaConsumer&lt;String, String&gt; consumer &#x3D; new KafkaConsumer&lt;&gt;(properties);</p>
+<p>​    &#x2F;&#x2F;4. 设置消费主题 形参是列表</p>
+<p>​    consumer.subscribe(Arrays.asList(“first”));</p>
+<p>​    &#x2F;&#x2F;5. 消费数据</p>
+<p>​    while (true){</p>
+<p>​      &#x2F;&#x2F; 读取消息</p>
+<p>​       ConsumerRecords&lt;String, String&gt; consumerRecords &#x3D; consumer.poll(Duration.ofSeconds(1));</p>
+<p>​      &#x2F;&#x2F; 输出消息</p>
+<p>​      for (ConsumerRecord&lt;String, String&gt; consumerRecord : consumerRecords) {</p>
+<p>​        System.out.println(consumerRecord.value());</p>
+<p>​      } </p>
+<p>​      &#x2F;&#x2F; 同步提交offset</p>
+<p>​       consumer.commitSync();</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<p><strong>2****）异步提交offset</strong></p>
+<p>虽然同步提交offset更可靠一些，但是由于其会阻塞当前线程，直到提交成功。因此吞吐量会受到很大的影响。因此更多的情况下，会选用异步提交offset的方式。</p>
+<p>以下为异步提交offset的示例：</p>
+<p>package com.atguigu.kafka.consumer;</p>
+<p>import org.apache.kafka.clients.consumer.*;</p>
+<p>import org.apache.kafka.common.TopicPartition;</p>
+<p>import java.util.Arrays;</p>
+<p>import java.util.Map;</p>
+<p>import java.util.Properties;</p>
+<p>public class CustomConsumerByHandAsync {</p>
+<p>  public static void main(String[] args) {</p>
+<p>​    &#x2F;&#x2F; 1. 创建kafka消费者配置类</p>
+<p>​    Properties properties &#x3D; new Properties();</p>
+<p>​    &#x2F;&#x2F; 2. 添加配置参数</p>
+<p>​    &#x2F;&#x2F; 添加连接</p>
+<p>​    properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, “hadoop102:9092”);</p>
+<p>​    &#x2F;&#x2F; 配置序列化 必须</p>
+<p>properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, “org.apache.kafka.common.serialization.StringDeserializer”);</p>
+<p>​    properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, “org.apache.kafka.common.serialization.StringDeserializer”);</p>
+<p>​    &#x2F;&#x2F; 配置消费者组</p>
+<p>​    properties.put(ConsumerConfig.GROUP_ID_CONFIG, “test”);</p>
+<p>​    &#x2F;&#x2F; 是否自动提交offset</p>
+<p>​    properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, “false”);</p>
+<p>​    &#x2F;&#x2F;3. 创建Kafka消费者</p>
+<p>​    KafkaConsumer&lt;String, String&gt; consumer &#x3D; new KafkaConsumer&lt;&gt;(properties);</p>
+<p>​    &#x2F;&#x2F;4. 设置消费主题 形参是列表</p>
+<p>​    consumer.subscribe(Arrays.asList(“first”));</p>
+<p>​    &#x2F;&#x2F;5. 消费数据</p>
+<p>​    while (true){</p>
+<p>​      &#x2F;&#x2F; 读取消息</p>
+<p>​      ConsumerRecords&lt;String, String&gt; consumerRecords &#x3D; consumer.poll(Duration.ofSeconds(1));</p>
+<p>​      &#x2F;&#x2F; 输出消息</p>
+<p>​      for (ConsumerRecord&lt;String, String&gt; consumerRecord : consumerRecords) {</p>
+<p>​        System.out.println(consumerRecord.value());</p>
+<p>​      }</p>
+<p>​      &#x2F;&#x2F; 异步提交offset</p>
+<p>​      consumer.commitAsync();</p>
+<p>​    }</p>
+<p>  }</p>
+<p>}</p>
+<h3 id="5-5-4-指定Offset消费"><a href="#5-5-4-指定Offset消费" class="headerlink" title="5.5.4 指定Offset消费"></a>5.5.4 指定Offset消费</h3><p>auto.offset.reset &#x3D; earliest | latest | none   默认是latest。</p>
+<p>当Kafka中没有初始偏移量（消费者组第一次消费）或服务器上不再存在当前偏移量时（例如该数据已被删除），该怎么办？</p>
+<p>（1）earliest：自动将偏移量重置为最早的偏移量，–from-beginning。</p>
+<p>（2）latest（默认值）：自动将偏移量重置为最新偏移量。</p>
+<p>（3）none：如果未找到消费者组的先前偏移量，则向消费者抛出异常。</p>
+<p><img src="/project/../post_picture/hive/clip_image120.jpg" alt="img"></p>
+<h3 id="5-5-5-漏消费和重复消费"><a href="#5-5-5-漏消费和重复消费" class="headerlink" title="5.5.5 漏消费和重复消费"></a>5.5.5 漏消费和重复消费</h3><p><strong>重复消费：</strong>已经消费了数据，但是offset没提交。</p>
+<p><strong>漏消费：</strong>先提交offset后消费，有可能会造成数据的漏消费。</p>
+<p><img src="/project/../post_picture/hive/clip_image122.gif" alt="img"></p>
+<p>思考：怎么能做到既不漏消费也不重复消费呢？详看消费者事务。</p>
+<h2 id="5-6-生产经验——消费者事务"><a href="#5-6-生产经验——消费者事务" class="headerlink" title="5.6 生产经验——消费者事务"></a>5.6 生产经验——消费者事务</h2><p><img src="/project/../post_picture/hive/clip_image124.gif" alt="img"></p>
+<h2 id="5-7-生产经验——数据积压（消费者如何提高吞吐量）"><a href="#5-7-生产经验——数据积压（消费者如何提高吞吐量）" class="headerlink" title="5.7 生产经验——数据积压（消费者如何提高吞吐量）"></a>5.7 生产经验——数据积压（消费者如何提高吞吐量）</h2><p><img src="/project/../post_picture/hive/clip_image126.gif" alt="img"></p>
+<table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fetch.max.bytes</td>
+<td>默认Default: 52428800（50 m）。消费者获取服务器端一批消息最大的字节数。如果服务器端一批次的数据大于该值（50m）仍然可以拉取回来这批数据，因此，这不是一个绝对最大值。一批次的大小受message.max.bytes （broker config）or max.message.bytes （topic config）影响。</td>
+</tr>
+<tr>
+<td>max.poll.records</td>
+<td>一次poll拉取数据返回消息的最大条数，默认是500条</td>
+</tr>
+</tbody></table>
+<h1 id="第6章-Kafka-Eagle监控"><a href="#第6章-Kafka-Eagle监控" class="headerlink" title="第6章 Kafka-Eagle监控"></a>第6章 Kafka-Eagle监控</h1><p>Kafka-Eagle框架可以监控Kafka集群的整体运行情况，在生产环境中经常使用。</p>
+<h2 id="6-1-MySQL环境准备"><a href="#6-1-MySQL环境准备" class="headerlink" title="6.1 MySQL环境准备"></a>6.1 MySQL环境准备</h2><p>Kafka-Eagle的安装依赖于MySQL，MySQL主要用来存储可视化展示的数据。如果集群中之前安装过MySQL可以跨过该步。</p>
+<p><img src="/project/../post_picture/hive/clip_image128.gif" alt="img"></p>
+<h2 id="6-2-Kafka环境准备"><a href="#6-2-Kafka环境准备" class="headerlink" title="6.2 Kafka环境准备"></a>6.2 Kafka环境准备</h2><p><strong>1<strong><strong>）关闭Kafka</strong></strong>集群</strong></p>
+<p>[atguigu@hadoop102 kafka]$ kf.sh stop</p>
+<p><strong>2<strong><strong>）修改&#x2F;opt&#x2F;module&#x2F;kafka&#x2F;bin&#x2F;kafka-server-start.sh</strong></strong>命令中</strong></p>
+<p>[atguigu@hadoop102 kafka]$ vim bin&#x2F;kafka-server-start.sh</p>
+<p>修改如下参数值：</p>
+<p>if [ “x$KAFKA_HEAP_OPTS” &#x3D; “x” ]; then</p>
+<p>  export KAFKA_HEAP_OPTS&#x3D;”-Xmx1G -Xms1G”</p>
+<p>fi</p>
+<p>为</p>
+<p>if [ “x$KAFKA_HEAP_OPTS” &#x3D; “x” ]; then</p>
+<p>  export KAFKA_HEAP_OPTS&#x3D;”-server -Xms2G -Xmx2G -XX:PermSize&#x3D;128m -XX:+UseG1GC -XX:MaxGCPauseMillis&#x3D;200 -XX:ParallelGCThreads&#x3D;8 -XX:ConcGCThreads&#x3D;5 -XX:InitiatingHeapOccupancyPercent&#x3D;70”</p>
+<p>  export JMX_PORT&#x3D;”9999”</p>
+<p>  #export KAFKA_HEAP_OPTS&#x3D;”-Xmx1G -Xms1G”</p>
+<p>fi</p>
+<p>注意：修改之后在启动Kafka之前要分发之其他节点。</p>
+<p>[atguigu@hadoop102 bin]$ xsync kafka-server-start.sh</p>
+<h2 id="6-3-Kafka-Eagle安装"><a href="#6-3-Kafka-Eagle安装" class="headerlink" title="6.3 Kafka-Eagle安装"></a>6.3 Kafka-Eagle安装</h2><p><strong>0****）官网：<a target="_blank" rel="noopener" href="https://www.kafka-eagle.org/">https://www.kafka-eagle.org/</a></strong></p>
+<p><strong>1<strong><strong>）上传压缩包kafka-eagle-bin-2.0.8.tar.gz</strong></strong>到集群&#x2F;opt&#x2F;software****目录</strong></p>
+<p><strong>2****）解压到本地</strong></p>
+<p>[atguigu@hadoop102 software]$ tar -zxvf kafka-eagle-bin-2.0.8.tar.gz </p>
+<p><strong>3****）进入刚才解压的目录</strong></p>
+<p>[atguigu@hadoop102 kafka-eagle-bin-2.0.8]$ ll</p>
+<p>总用量 79164</p>
+<p>-rw-rw-r–. 1 atguigu atguigu 81062577 10月 13 00:00 efak-web-2.0.8-bin.tar.gz</p>
+<p><strong>4<strong><strong>）将efak-web-2.0.8-bin.tar.gz</strong></strong>解压至&#x2F;opt&#x2F;module</strong></p>
+<p>[atguigu@hadoop102 kafka-eagle-bin-2.0.8]$ tar -zxvf efak-web-2.0.8-bin.tar.gz -C &#x2F;opt&#x2F;module&#x2F;</p>
+<p><strong>5****）修改名称</strong></p>
+<p>[atguigu@hadoop102 module]$ mv efak-web-2.0.8&#x2F; efak</p>
+<p><strong>6****）修改配置文件 &#x2F;opt&#x2F;module&#x2F;efak&#x2F;conf&#x2F;system-config.properties</strong></p>
+<p>[atguigu@hadoop102 conf]$ vim system-config.properties</p>
+<p>######################################</p>
+<p># multi zookeeper &amp; kafka cluster list</p>
+<p># Settings prefixed with ‘kafka.eagle.’ will be deprecated, use ‘efak.’ instead</p>
+<p>######################################</p>
+<p>efak.zk.cluster.alias&#x3D;cluster1</p>
+<p>cluster1.zk.list&#x3D;<strong>hadoop102:2181,hadoop103:2181,hadoop104:2181&#x2F;kafka</strong></p>
+<p>######################################</p>
+<p># zookeeper enable acl</p>
+<p>######################################</p>
+<p>cluster1.zk.acl.enable&#x3D;false</p>
+<p>cluster1.zk.acl.schema&#x3D;digest</p>
+<p>cluster1.zk.acl.username&#x3D;test</p>
+<p>cluster1.zk.acl.password&#x3D;test123</p>
+<p>######################################</p>
+<p># broker size online list</p>
+<p>######################################</p>
+<p>cluster1.efak.broker.size&#x3D;20</p>
+<p>######################################</p>
+<p># zk client thread limit</p>
+<p>######################################</p>
+<p>kafka.zk.limit.size&#x3D;32</p>
+<p>######################################</p>
+<p># EFAK webui port</p>
+<p>######################################</p>
+<p>efak.webui.port&#x3D;8048</p>
+<p>######################################</p>
+<p># kafka jmx acl and ssl authenticate</p>
+<p>######################################</p>
+<p>cluster1.efak.jmx.acl&#x3D;false</p>
+<p>cluster1.efak.jmx.user&#x3D;keadmin</p>
+<p>cluster1.efak.jmx.password&#x3D;keadmin123</p>
+<p>cluster1.efak.jmx.ssl&#x3D;false</p>
+<p>cluster1.efak.jmx.truststore.location&#x3D;&#x2F;data&#x2F;ssl&#x2F;certificates&#x2F;kafka.truststore</p>
+<p>cluster1.efak.jmx.truststore.password&#x3D;ke123456</p>
+<p>######################################</p>
+<p># kafka offset storage</p>
+<p>######################################</p>
+<p># offset保存在kafka</p>
+<p>cluster1.efak.offset.storage&#x3D;kafka</p>
+<p>######################################</p>
+<p># kafka jmx uri</p>
+<p>######################################</p>
+<p>cluster1.efak.jmx.uri&#x3D;service:jmx:rmi:&#x2F;&#x2F;&#x2F;jndi&#x2F;rmi:&#x2F;&#x2F;%s&#x2F;jmxrmi</p>
+<p>######################################</p>
+<p># kafka metrics, 15 days by default</p>
+<p>######################################</p>
+<p>efak.metrics.charts&#x3D;true</p>
+<p>efak.metrics.retain&#x3D;15</p>
+<p>######################################</p>
+<p># kafka sql topic records max</p>
+<p>######################################</p>
+<p>efak.sql.topic.records.max&#x3D;5000</p>
+<p>efak.sql.topic.preview.records.max&#x3D;10</p>
+<p>######################################</p>
+<p># delete kafka topic token</p>
+<p>######################################</p>
+<p>efak.topic.token&#x3D;keadmin</p>
+<p>######################################</p>
+<p># kafka sasl authenticate</p>
+<p>######################################</p>
+<p>cluster1.efak.sasl.enable&#x3D;false</p>
+<p>cluster1.efak.sasl.protocol&#x3D;SASL_PLAINTEXT</p>
+<p>cluster1.efak.sasl.mechanism&#x3D;SCRAM-SHA-256</p>
+<p>cluster1.efak.sasl.jaas.config&#x3D;org.apache.kafka.common.security.scram.ScramLoginModule required username&#x3D;”kafka” password&#x3D;”kafka-eagle”;</p>
+<p>cluster1.efak.sasl.client.id&#x3D;</p>
+<p>cluster1.efak.blacklist.topics&#x3D;</p>
+<p>cluster1.efak.sasl.cgroup.enable&#x3D;false</p>
+<p>cluster1.efak.sasl.cgroup.topics&#x3D;</p>
+<p>cluster2.efak.sasl.enable&#x3D;false</p>
+<p>cluster2.efak.sasl.protocol&#x3D;SASL_PLAINTEXT</p>
+<p>cluster2.efak.sasl.mechanism&#x3D;PLAIN</p>
+<p>cluster2.efak.sasl.jaas.config&#x3D;org.apache.kafka.common.security.plain.PlainLoginModule required username&#x3D;”kafka” password&#x3D;”kafka-eagle”;</p>
+<p>cluster2.efak.sasl.client.id&#x3D;</p>
+<p>cluster2.efak.blacklist.topics&#x3D;</p>
+<p>cluster2.efak.sasl.cgroup.enable&#x3D;false</p>
+<p>cluster2.efak.sasl.cgroup.topics&#x3D;</p>
+<p>######################################</p>
+<p># kafka ssl authenticate</p>
+<p>######################################</p>
+<p>cluster3.efak.ssl.enable&#x3D;false</p>
+<p>cluster3.efak.ssl.protocol&#x3D;SSL</p>
+<p>cluster3.efak.ssl.truststore.location&#x3D;</p>
+<p>cluster3.efak.ssl.truststore.password&#x3D;</p>
+<p>cluster3.efak.ssl.keystore.location&#x3D;</p>
+<p>cluster3.efak.ssl.keystore.password&#x3D;</p>
+<p>cluster3.efak.ssl.key.password&#x3D;</p>
+<p>cluster3.efak.ssl.endpoint.identification.algorithm&#x3D;https</p>
+<p>cluster3.efak.blacklist.topics&#x3D;</p>
+<p>cluster3.efak.ssl.cgroup.enable&#x3D;false</p>
+<p>cluster3.efak.ssl.cgroup.topics&#x3D;</p>
+<p>######################################</p>
+<p># kafka sqlite jdbc driver address</p>
+<p>######################################</p>
+<p># 配置mysql连接</p>
+<p>efak.driver&#x3D;com.mysql.jdbc.Driver</p>
+<p>efak.url&#x3D;jdbc:mysql:&#x2F;&#x2F;hadoop102:3306&#x2F;ke?useUnicode&#x3D;true&amp;characterEncoding&#x3D;UTF-8&amp;zeroDateTimeBehavior&#x3D;convertToNull</p>
+<p>efak.username&#x3D;root</p>
+<p>efak.password&#x3D;root</p>
+<p>######################################</p>
+<p># kafka mysql jdbc driver address</p>
+<p>######################################</p>
+<p>#efak.driver&#x3D;com.mysql.cj.jdbc.Driver</p>
+<p>#efak.url&#x3D;jdbc:mysql:&#x2F;&#x2F;127.0.0.1:3306&#x2F;ke?useUnicode&#x3D;true&amp;characterEncoding&#x3D;UTF-8&amp;zeroDateTimeBehavior&#x3D;convertToNull</p>
+<p>#efak.username&#x3D;root</p>
+<p>#efak.password&#x3D;123456</p>
+<p><strong>7****）添加环境变量</strong> </p>
+<p>[atguigu@hadoop102 conf]$ sudo vim &#x2F;etc&#x2F;profile.d&#x2F;my_env.sh</p>
+<p># kafkaEFAK</p>
+<p>export KE_HOME&#x3D;&#x2F;opt&#x2F;module&#x2F;efak</p>
+<p>export PATH&#x3D;$PATH:$KE_HOME&#x2F;bin</p>
+<p>注意：source &#x2F;etc&#x2F;profile</p>
+<p>[atguigu@hadoop102 conf]$ source &#x2F;etc&#x2F;profile</p>
+<p><strong>8****）启动</strong></p>
+<p>（1）注意：启动之前需要先启动ZK以及KAFKA。</p>
+<p>[atguigu@hadoop102 kafka]$ kf.sh start</p>
+<p>（2）启动efak</p>
+<p>[atguigu@hadoop102 efak]$ bin&#x2F;ke.sh start</p>
+<p>Version 2.0.8 – Copyright 2016-2021</p>
+<hr>
+<p>* EFAK Service has started success.</p>
+<p>* Welcome, Now you can visit ‘<a target="_blank" rel="noopener" href="http://192.168.10.102:8048/">http://192.168.10.102:8048</a>‘</p>
+<p>* Account:admin ,Password:123456</p>
+<hr>
+<p>* <Usage> ke.sh [start|status|stop|restart|stats] </Usage></p>
+<p>* <Usage> <a target="_blank" rel="noopener" href="https://www.kafka-eagle.org/">https://www.kafka-eagle.org/</a> </Usage></p>
+<hr>
+<p>说明：如果停止efak，执行命令。</p>
+<p>[atguigu@hadoop102 efak]$ bin&#x2F;ke.sh stop</p>
+<h2 id="6-4-Kafka-Eagle页面操作"><a href="#6-4-Kafka-Eagle页面操作" class="headerlink" title="6.4 Kafka-Eagle页面操作"></a>6.4 Kafka-Eagle页面操作</h2><p><strong>1****）登录页面查看监控数据</strong></p>
+<p><a target="_blank" rel="noopener" href="http://192.168.10.102:8048/">http://192.168.10.102:8048/</a></p>
+<p><img src="/project/../post_picture/hive/clip_image130.jpg" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image132.jpg" alt="img"></p>
+<p><img src="/project/../post_picture/hive/clip_image134.jpg" alt="img"></p>
+<h1 id="第7章-Kafka-Kraft模式"><a href="#第7章-Kafka-Kraft模式" class="headerlink" title="第7章 Kafka-Kraft模式"></a>第7章 Kafka-Kraft模式</h1><h2 id="7-1-Kafka-Kraft架构"><a href="#7-1-Kafka-Kraft架构" class="headerlink" title="7.1 Kafka-Kraft架构"></a>7.1 Kafka-Kraft架构</h2><p><img src="/project/../post_picture/hive/clip_image136.gif" alt="QR 代码  描述已自动生成"></p>
+<p>左图为Kafka现有架构，元数据在zookeeper中，运行时动态选举controller，由controller进行Kafka集群管理。右图为kraft模式架构（实验性），不再依赖zookeeper集群，而是用三台controller节点代替zookeeper，元数据保存在controller中，由controller直接进行Kafka集群管理。</p>
+<p>​    这样做的好处有以下几个：</p>
+<p>l Kafka不再依赖外部框架，而是能够独立运行；</p>
+<p>l controller管理集群时，不再需要从zookeeper中先读取数据，集群性能上升；</p>
+<p>l 由于不依赖zookeeper，集群扩展时不再受到zookeeper读写能力限制；</p>
+<p>l controller不再动态选举，而是由配置文件规定。这样我们可以有针对性的加强controller节点的配置，而不是像以前一样对随机controller节点的高负载束手无策。</p>
+<h2 id="7-2-Kafka-Kraft集群部署"><a href="#7-2-Kafka-Kraft集群部署" class="headerlink" title="7.2 Kafka-Kraft集群部署"></a>7.2 Kafka-Kraft集群部署</h2><p>1）再次解压一份kafka安装包</p>
+<p>[atguigu@hadoop102 software]$ tar -zxvf kafka_2.12-3.0.0.tgz -C &#x2F;opt&#x2F;module&#x2F;</p>
+<p>2）重命名为kafka2</p>
+<p>[atguigu@hadoop102 module]$ mv kafka_2.12-3.0.0&#x2F; kafka2</p>
+<p>3）在hadoop102上修改&#x2F;opt&#x2F;module&#x2F;kafka2&#x2F;config&#x2F;kraft&#x2F;server.properties配置文件</p>
+<p>[atguigu@hadoop102 kraft]$ vim server.properties</p>
+<p>#kafka的角色（controller相当于主机、broker节点相当于从机，主机类似zk功能）</p>
+<p>process.roles&#x3D;broker, controller</p>
+<p>#节点ID</p>
+<p>node.id&#x3D;<strong>2</strong></p>
+<p>#controller服务协议别名</p>
+<p>controller.listener.names&#x3D;CONTROLLER</p>
+<p>#全Controller列表</p>
+<p>controller.quorum.voters&#x3D;<strong>2</strong>@hadoop102:9093,<strong>3</strong>@hadoop103:9093,<strong>4</strong>@hadoop104:9093</p>
+<p>#不同服务器绑定的端口</p>
+<p>listeners&#x3D;PLAINTEXT:&#x2F;&#x2F;:9092,CONTROLLER:&#x2F;&#x2F;:9093</p>
+<p>#broker服务协议别名</p>
+<p>inter.broker.listener.name&#x3D;PLAINTEXT</p>
+<p>#broker对外暴露的地址</p>
+<p>advertised.Listeners&#x3D;PLAINTEXT:&#x2F;&#x2F;<strong>hadoop102</strong>:9092</p>
+<p>#协议别名到安全协议的映射</p>
+<p>listener.security.protocol.map&#x3D;CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,SSL:SSL,SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_SSL:SASL_SSL</p>
+<p>#kafka数据存储目录</p>
+<p>log.dirs&#x3D;&#x2F;opt&#x2F;module&#x2F;kafka2&#x2F;data</p>
+<p>4）分发kafka2</p>
+<p>[atguigu@hadoop102 module]$ xsync kafka2&#x2F;</p>
+<p>l 在hadoop103和hadoop104上需要对node.id相应改变，值需要和controller.quorum.voters对应。</p>
+<p>l 在hadoop103和hadoop104上需要根据各自的主机名称，修改相应的advertised.Listeners地址。</p>
+<p>5）初始化集群数据目录</p>
+<p>（1）首先生成存储目录唯一ID。</p>
+<p>[atguigu@hadoop102 kafka2]$ bin&#x2F;kafka-storage.sh random-uuid</p>
+<p>J7s9e8PPTKOO47PxzI39VA</p>
+<p>（2）用该ID格式化kafka存储目录（三台节点）。</p>
+<p>[atguigu@hadoop102 kafka2]$ bin&#x2F;kafka-storage.sh format -t J7s9e8PPTKOO47PxzI39VA -c &#x2F;opt&#x2F;module&#x2F;kafka_2.12-3.0.0&#x2F;config&#x2F;kraft&#x2F;server.properties</p>
+<p>[atguigu@hadoop103 kafka2]$ bin&#x2F;kafka-storage.sh format -t J7s9e8PPTKOO47PxzI39VA -c &#x2F;opt&#x2F;module&#x2F;kafka_2.12-3.0.0&#x2F;config&#x2F;kraft&#x2F;server.properties</p>
+<p>[atguigu@hadoop104 kafka2]$ bin&#x2F;kafka-storage.sh format -t J7s9e8PPTKOO47PxzI39VA -c &#x2F;opt&#x2F;module&#x2F;kafka_2.12-3.0.0&#x2F;config&#x2F;kraft&#x2F;server.properties</p>
+<p>6）启动kafka集群</p>
+<p>[atguigu@hadoop102 kafka2]$ bin&#x2F;kafka-server-start.sh -daemon config&#x2F;kraft&#x2F;server.properties</p>
+<p>[atguigu@hadoop103 kafka2]$ bin&#x2F;kafka-server-start.sh -daemon config&#x2F;kraft&#x2F;server.properties</p>
+<p>[atguigu@hadoop104 kafka2]$ bin&#x2F;kafka-server-start.sh -daemon config&#x2F;kraft&#x2F;server.properties</p>
+<p>7）停止kafka集群</p>
+<p>[atguigu@hadoop102 kafka2]$ bin&#x2F;kafka-server-stop.sh</p>
+<p>[atguigu@hadoop103 kafka2]$ bin&#x2F;kafka-server-stop.sh</p>
+<p>[atguigu@hadoop104 kafka2]$ bin&#x2F;kafka-server-stop.sh</p>
+<h2 id="7-3-Kafka-Kraft集群启动停止脚本"><a href="#7-3-Kafka-Kraft集群启动停止脚本" class="headerlink" title="7.3 Kafka-Kraft集群启动停止脚本"></a>7.3 Kafka-Kraft集群启动停止脚本</h2><p>1）在&#x2F;home&#x2F;atguigu&#x2F;bin目录下创建文件kf2.sh脚本文件</p>
+<p>[atguigu@hadoop102 bin]$ vim kf2.sh</p>
+<p>脚本如下：</p>
+<p>#! &#x2F;bin&#x2F;bash</p>
+<p>case $1 in</p>
+<p>“start”){</p>
+<p>  for i in hadoop102 hadoop103 hadoop104</p>
+<p>  do</p>
+<p>​    echo “ ——–启动 $i Kafka2——-“</p>
+<p>​    ssh $i “&#x2F;opt&#x2F;module&#x2F;kafka2&#x2F;bin&#x2F;kafka-server-start.sh -daemon &#x2F;opt&#x2F;module&#x2F;kafka2&#x2F;config&#x2F;kraft&#x2F;server.properties”</p>
+<p>  done</p>
+<p>};;</p>
+<p>“stop”){</p>
+<p>  for i in hadoop102 hadoop103 hadoop104</p>
+<p>  do</p>
+<p>​    echo “ ——–停止 $i Kafka2——-“</p>
+<p>​    ssh $i “&#x2F;opt&#x2F;module&#x2F;kafka2&#x2F;bin&#x2F;kafka-server-stop.sh “</p>
+<p>  done</p>
+<p>};;</p>
+<p>esac</p>
+<p>2）添加执行权限</p>
+<p>[atguigu@hadoop102 bin]$ chmod +x kf2.sh</p>
+<p>3）启动集群命令</p>
+<p>[atguigu@hadoop102 ~]$ kf2.sh start</p>
+<p>4）停止集群命令</p>
+<p>[atguigu@hadoop102 ~]$ kf2.sh stop</p>
+
                 
             </div>
             <hr/>
