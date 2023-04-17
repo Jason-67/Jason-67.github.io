@@ -4,15 +4,31 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="LCH">
-    <meta name="description" content="title: Hadoop集群搭建及组件配置date: 2023-03-10 19:38:04tags: 大数据 Hadoop 集群搭建 自学
-Hadoop集群搭建及组件配置Hadoop集群搭建
+    <meta name="keywords" content="Hadoop集群搭建及组件配置, LCH">
+    <meta name="description" content="Hadoop集群搭建及组件配置Hadoop集群搭建
 
 
 主机名
 ip
 NameNode
-Data">
+DataNode
+Yarn
+ZK
+JournalNode
+
+
+
+node02
+172.29.66.129
+√
+√
+×
+√
+√
+
+
+node03
+172.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -24,7 +40,7 @@ Data">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>LCH</title>
+    <title>Hadoop集群搭建及组件配置 | LCH</title>
     <link rel="icon" type="image/png" href="/project/favicon.png">
     
 
@@ -339,12 +355,12 @@ Data">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/project/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/project/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">Hadoop集群搭建及组件配置</h1>
                 </div>
             </div>
         </div>
@@ -366,9 +382,13 @@ Data">
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/project/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE-Hadoop-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA-%E8%87%AA%E5%AD%A6/">
+                                <span class="chip bg-color">大数据 Hadoop 集群搭建 自学</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -380,7 +400,7 @@ Data">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-04-16
+                    2023-03-10
                 </div>
                 
 
@@ -401,8 +421,7 @@ Data">
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>title: Hadoop集群搭建及组件配置<br>date: 2023-03-10 19:38:04<br>tags: 大数据 Hadoop 集群搭建 自学</p>
-<h1 id="Hadoop集群搭建及组件配置"><a href="#Hadoop集群搭建及组件配置" class="headerlink" title="Hadoop集群搭建及组件配置"></a>Hadoop集群搭建及组件配置</h1><h2 id="Hadoop集群搭建"><a href="#Hadoop集群搭建" class="headerlink" title="Hadoop集群搭建"></a>Hadoop集群搭建</h2><table>
+                <h1 id="Hadoop集群搭建及组件配置"><a href="#Hadoop集群搭建及组件配置" class="headerlink" title="Hadoop集群搭建及组件配置"></a>Hadoop集群搭建及组件配置</h1><h2 id="Hadoop集群搭建"><a href="#Hadoop集群搭建" class="headerlink" title="Hadoop集群搭建"></a>Hadoop集群搭建</h2><table>
 <thead>
 <tr>
 <th align="center">主机名</th>
@@ -973,7 +992,7 @@ Data">
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://Jason-67.github.io/project/project/2023/04/16/Hadoop%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E5%8F%8A%E7%BB%84%E4%BB%B6%E9%85%8D%E7%BD%AE/">https://Jason-67.github.io/project/project/2023/04/16/Hadoop%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E5%8F%8A%E7%BB%84%E4%BB%B6%E9%85%8D%E7%BD%AE/</a>
+                    <a href="https://Jason-67.github.io/project/project/2023/03/10/Hadoop%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E5%8F%8A%E7%BB%84%E4%BB%B6%E9%85%8D%E7%BD%AE/">https://Jason-67.github.io/project/project/2023/03/10/Hadoop%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E5%8F%8A%E7%BB%84%E4%BB%B6%E9%85%8D%E7%BD%AE/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1010,7 +1029,11 @@ Data">
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/project/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE-Hadoop-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA-%E8%87%AA%E5%AD%A6/">
+                                    <span class="chip bg-color">大数据 Hadoop 集群搭建 自学</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -1053,7 +1076,7 @@ Data">
         repo: '',
         owner: '',
         admin: null,
-        id: '2023-04-16T17-05-57',
+        id: '2023-03-10T19-38-04',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1085,51 +1108,6 @@ Data">
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/project/2023/04/17/Kafka%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/project/medias/featureimages/11.jpg" class="responsive-img" alt="Kafka学习历程">
-                        
-                        <span class="card-title">Kafka学习历程</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-04-17
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            Jason
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/project/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%84%E4%BB%B6-Kafka-%E8%87%AA%E5%AD%A6/">
-                        <span class="chip bg-color">大数据组件 Kafka 自学</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
                 <a href="/project/2023/03/24/Hive%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/">
                     <div class="card-image">
                         
@@ -1146,8 +1124,45 @@ Data">
                         
                     </div>
                     <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-24
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Jason
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
+            </div>
+            <div class="card">
+                <a href="/project/2023/03/10/Hadoop%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E5%8F%8A%E7%BB%84%E4%BB%B6%E9%85%8D%E7%BD%AE/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/project/medias/featureimages/3.jpg" class="responsive-img" alt="Hadoop集群搭建及组件配置">
+                        
+                        <span class="card-title">Hadoop集群搭建及组件配置</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-10
                             </span>
                         <span class="publish-author">
                             
@@ -1156,6 +1171,15 @@ Data">
                             
                         </span>
                     </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/project/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE-Hadoop-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA-%E8%87%AA%E5%AD%A6/">
+                        <span class="chip bg-color">大数据 Hadoop 集群搭建 自学</span>
+                    </a>
+                    
                 </div>
                 
             </div>
